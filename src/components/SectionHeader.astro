@@ -1,0 +1,23 @@
+---
+interface Props {
+  index: string;
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  theme?: "light" | "dark";
+  headingId?: string;
+}
+
+const { index, eyebrow, title, lead, theme = "light", headingId } = Astro.props;
+---
+
+<header class:list={["section-header", `section-header--${theme}`]} data-reveal>
+  <div class="section-header__meta">
+    <span>{index}</span>
+    {eyebrow && <span>{eyebrow}</span>}
+  </div>
+  <div>
+    <h2 id={headingId}>{title}</h2>
+    {lead && <p>{lead}</p>}
+  </div>
+</header>

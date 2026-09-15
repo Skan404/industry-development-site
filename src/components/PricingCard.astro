@@ -1,0 +1,38 @@
+---
+import type { Package } from "../data/site";
+
+interface Props {
+  item: Package;
+  compact?: boolean;
+}
+
+const { item, compact = false } = Astro.props;
+---
+
+<article class:list={["pricing-card glow-card", { "pricing-card--highlighted": item.highlighted, "pricing-card--compact": compact }]}>
+  <div class="pricing-card__top">
+    <div>
+      <p class="pricing-card__name">{item.name}</p>
+      {item.badge && <span class="badge">{item.badge}</span>}
+    </div>
+    <span class="pricing-card__code" aria-hidden="true">{item.highlighted ? "✳" : "↗"}</span>
+  </div>
+  <p class="pricing-card__description">{item.description}</p>
+  <div class="pricing-card__price">
+    <strong>{item.price} zł</strong>
+    <span>netto / miesiąc</span>
+  </div>
+  <p class="pricing-card__commitment">
+    <span>0 zł wdrożenia</span>
+    Umowa B2B: minimum 24 miesiące
+  </p>
+  <ul class="check-list">
+    {item.features.map((feature) => <li>{feature}</li>)}
+    <li>{item.changes}</li>
+    <li>{item.response}</li>
+  </ul>
+  <a class:list={["button button--full", item.highlighted ? "button--primary" : "button--outline"]} href="/kontakt#formularz">
+    Zapytaj o pakiet {item.name}
+    <span aria-hidden="true">↗</span>
+  </a>
+</article>

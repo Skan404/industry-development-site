@@ -1,0 +1,20 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PricingGrid from "../components/PricingGrid.astro";
+import PackageComparison from "../components/PackageComparison.astro";
+import FAQ from "../components/FAQ.astro";
+import ClosingCTA from "../components/ClosingCTA.astro";
+const services = [
+  { id: "projektowanie", number: "01", name: "Projekt, który pasuje\ndo Twojej firmy.", description: "Zaczynamy od zrozumienia Twojej oferty. Projektujemy czytelną strukturę i wygląd, który buduje zaufanie, a następnie zamieniamy je w działającą stronę.", items: ["Uporządkowana oferta i droga do kontaktu", "Spójna typografia, kolory i detale", "Układ dopasowany do telefonu i komputera"] },
+  { id: "technologia", number: "02", name: "Dopracowana również\npod powierzchnią.", description: "Twoi klienci chcą szybko znaleźć odpowiedź. Dbamy o sprawne ładowanie, dostępność i techniczne podstawy widoczności w wyszukiwarce.", items: ["Optymalizacja szybkości ładowania", "Metadane i techniczne SEO", "Wygodna nawigacja i formularze"] },
+  { id: "opieka", number: "03", name: "Twoja strona.\nNasza stała opieka.", description: "Nie zostajesz samodzielnie z technicznymi sprawami. Po publikacji utrzymujemy stronę i wprowadzamy drobne zmiany w zakresie Twojego pakietu.", items: ["Hosting, certyfikat SSL i monitoring", "Miesięczny czas na drobne zmiany", "Bezpośredni kontakt z osobą prowadzącą projekt"] },
+];
+---
+<BaseLayout title="Usługi i pakiety" description="Projektowanie, wdrożenie i stała opieka nad stronami internetowymi. Poznaj pakiety Start, Rozwój i Premium od 299 zł netto miesięcznie.">
+  <section class="subpage-hero container"><p class="eyebrow"><i></i> Usługi / Od pomysłu do publikacji</p><h1>Ty masz wizję.<br /><em>My nadajemy jej formę.</em></h1><p>Łączymy dobry projekt ze sprawnym działaniem.<br />Wszystko, czego potrzebuje Twoja strona — w jednym miejscu.</p><a class="button button--primary" href="#pakiety">Znajdź swój pakiet <span aria-hidden="true">↓</span></a></section>
+  <section class="container service-details" aria-label="Zakres usług">{services.map(service => <article id={service.id} class="service-detail glow-card"><span class="detail-number">{service.number}</span><h2>{service.name.split("\n").map(line => <span>{line}<br /></span>)}</h2><div><p>{service.description}</p><ul class="check-list">{service.items.map(item => <li>{item}</li>)}</ul></div></article>)}</section>
+  <section id="pakiety" class="section container pricing-section" aria-labelledby="packages-title"><div class="section-heading"><div><p class="eyebrow">Zakres dopasowany do Ciebie</p><h2 id="packages-title">Trzy pakiety.<br /><em>Jeden dobry standard.</em></h2></div><p>0 zł opłaty wdrożeniowej.<br />Umowa B2B na minimum 24 miesiące.<br />Ceny netto, rozliczane miesięcznie.</p></div><PricingGrid compact /><PackageComparison /></section>
+  <section class="container included-strip" aria-label="Standard każdego pakietu"><span>W każdym pakiecie</span><p>Wersja mobilna <i>✳</i> Hosting i SSL <i>✳</i> Poczta firmowa <i>✳</i> Stały kontakt</p></section>
+  <section class="section container faq-section" aria-labelledby="offer-faq"><div><p class="eyebrow">Przed decyzją</p><h2 id="offer-faq">Wszystko jasne.<br /><em>Od początku.</em></h2><p>Poznaj zasady współpracy, zanim zdecydujesz.</p></div><FAQ /></section>
+  <ClosingCTA />
+</BaseLayout>

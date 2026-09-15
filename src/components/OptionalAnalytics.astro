@@ -1,0 +1,26 @@
+---
+const source = import.meta.env.PUBLIC_ANALYTICS_SRC ?? "";
+---
+
+<script is:inline define:vars={{ source }}>
+  (() => {
+    if (!source) return;
+
+    const loadAnalytics = () => {
+      if (document.querySelector("[data-optional-analytics]")) return;
+      const script = document.createElement("script");
+      script.src = source;
+      script.async = true;
+      script.dataset.optionalAnalytics = "true";
+      document.head.append(script);
+    };
+
+    if (localStorage.getItem("analytics-consent") === "granted") {
+      loadAnalytics();
+    }
+
+    window.addEventListener("analytics-consent-changed", (event) => {
+      if (event.detail === "granted") loadAnalytics();
+    });
+  })();
+</script>

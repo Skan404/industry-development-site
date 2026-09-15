@@ -1,0 +1,12 @@
+---
+interface Props {
+  light?: boolean;
+}
+
+const { light = false } = Astro.props;
+---
+
+<span class:list={["wordmark", { "wordmark--light": light }]}>
+  <span class="wordmark__main">Industry<br />Development</span>
+  <span class="wordmark__descriptor">Digital<br />Studio</span>
+</span>

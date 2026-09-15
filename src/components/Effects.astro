@@ -1,0 +1,9 @@
+---
+interface Props { kind: "rays" | "pixels" | "grid" }
+const { kind } = Astro.props;
+---
+<div class:list={["effect", `effect--${kind}`]} data-effect={kind} aria-hidden="true"><div class="effect-fallback"></div><canvas></canvas></div>
+<script>
+  import { initEffects } from "../scripts/effects";
+  initEffects();
+</script>

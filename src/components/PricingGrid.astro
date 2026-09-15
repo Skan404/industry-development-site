@@ -1,0 +1,15 @@
+---
+import { packages, pricingNote } from "../data/site";
+import PricingCard from "./PricingCard.astro";
+
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+---
+
+<div class="pricing-grid">
+  {packages.map((item) => <PricingCard item={item} compact={compact} />)}
+</div>
+<p class="pricing-legal" data-reveal>{pricingNote}</p>

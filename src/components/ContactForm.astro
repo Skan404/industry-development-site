@@ -1,0 +1,204 @@
+---
+
+
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+const endpoint = import.meta.env.PUBLIC_CONTACT_ENDPOINT ?? "";
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
+const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL ?? "";
+---
+
+<form
+  class:list={["contact-form", { "contact-form--compact": compact }]}
+  data-contact-form
+  data-endpoint={endpoint}
+  method="post"
+  action={endpoint || undefined}
+>
+  {!endpoint && <div class="form-notice">Wysyłka formularza nie jest jeszcze dostępna. Możesz uzupełnić dane i pobrać ich kopię.{contactEmail && <> Możesz też <a href={`mailto:${contactEmail}`}>napisać bezpośrednio do nas</a>.</>}</div>}
+  <noscript><p class="form-notice">Do obsługi tego formularza potrzebny jest JavaScript.{contactEmail && <a href={`mailto:${contactEmail}`}> Napisz e-mail.</a>}</p><style>.form-submit,.draft-button{display:none!important}</style></noscript>
+  <div class="form-grid">
+    <div class="field">
+      <label for={`name-${compact ? "compact" : "full"}`}>Imię i nazwisko <span aria-hidden="true">*</span></label>
+      <input id={`name-${compact ? "compact" : "full"}`} name="name" type="text" autocomplete="name" required />
+      <span class="field__error" data-error-for="name"></span>
+    </div>
+    <div class="field">
+      <label for={`company-${compact ? "compact" : "full"}`}>Nazwa firmy <span aria-hidden="true">*</span></label>
+      <input id={`company-${compact ? "compact" : "full"}`} name="company" type="text" autocomplete="organization" required />
+      <span class="field__error" data-error-for="company"></span>
+    </div>
+    <div class="field">
+      <label for={`email-${compact ? "compact" : "full"}`}>E-mail <span aria-hidden="true">*</span></label>
+      <input id={`email-${compact ? "compact" : "full"}`} name="email" type="email" inputmode="email" autocomplete="email" required />
+      <span class="field__error" data-error-for="email"></span>
+    </div>
+    <div class="field">
+      <label for={`phone-${compact ? "compact" : "full"}`}>Telefon <span>(opcjonalnie)</span></label>
+      <input id={`phone-${compact ? "compact" : "full"}`} name="phone" type="tel" inputmode="tel" autocomplete="tel" />
+      <span class="field__error" data-error-for="phone"></span>
+    </div>
+  </div>
+
+  <div class="field field--honeypot" aria-hidden="true">
+    <label for={`company-url-${compact ? "compact" : "full"}`}>Adres firmy</label>
+    <input id={`company-url-${compact ? "compact" : "full"}`} name="companyUrl" type="text" tabindex="-1" autocomplete="off" />
+  </div>
+
+  {
+    turnstileSiteKey && (
+      <div class="cf-turnstile" data-sitekey={turnstileSiteKey}></div>
+    )
+  }
+  {
+    turnstileSiteKey && (
+      <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    )
+  }
+
+  <div class="form-consent">
+    <label>
+      <input name="privacy" type="checkbox" required />
+      <span>
+        Potwierdzam zapoznanie się z <a href="/polityka-prywatnosci">polityką prywatności</a>.
+        <span aria-hidden="true">*</span>
+      </span>
+    </label>
+    <span class="field__error" data-error-for="privacy"></span>
+  </div>
+
+  <div class="form-submit">
+    <button class="button button--primary" type="submit">
+      <span data-submit-label>Wyślij zapytanie</span>
+      <span aria-hidden="true" data-submit-icon>↗</span>
+    </button>
+    <p>Odpowiedź w ciągu 1 dnia roboczego.</p>
+  </div>
+  <div class="form-status" role="status" aria-live="polite" tabindex="-1" data-form-status hidden></div>
+  {!endpoint && <button class="button button--outline draft-button" type="button" data-download-draft>Pobierz kopię zgłoszenia ↓</button>}
+</form>
+
+<script>
+  const forms = document.querySelectorAll<HTMLFormElement>("[data-contact-form]");
+
+  const errorMessages: Record<string, string> = {
+    name: "Wpisz imię i nazwisko.",
+    company: "Wpisz nazwę firmy.",
+    email: "Podaj poprawny adres e-mail.",
+    privacy: "Potwierdź zapoznanie się z polityką prywatności.",
+  };
+
+  const validateField = (form: HTMLFormElement, field: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) => {
+    const isValid = field.checkValidity();
+
+    const error = form.querySelector<HTMLElement>(`[data-error-for="${field.name}"]`);
+    field.setAttribute("aria-invalid", String(!isValid));
+    if (error) error.textContent = isValid ? "" : (errorMessages[field.name] ?? "Sprawdź to pole.");
+    return isValid;
+  };
+
+  forms.forEach((form) => {
+    form.noValidate = true;
+    form.querySelector("[data-download-draft]")?.addEventListener("click", () => {
+      const labels: Record<string, string> = { name: "Imię i nazwisko", company: "Firma", email: "E-mail", phone: "Telefon" };
+      const lines = Object.entries(labels).map(([name, label]) => {
+        const field = form.elements.namedItem(name);
+        const value = field instanceof HTMLSelectElement ? field.selectedOptions[0]?.textContent : field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement ? field.value : "";
+        return `${label}: ${value || "—"}`;
+      });
+      const blob = new Blob(["Industry Development — kopia zapytania (niewysłana)\n\n", lines.join("\n\n")], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a"); link.href = url; link.download = "moje-zapytanie.txt"; link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+    const fields = Array.from(
+      form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
+        "input:not([name='companyUrl']), select, textarea"
+      )
+    );
+
+    fields.forEach((field) => {
+      const error = form.querySelector<HTMLElement>(`[data-error-for="${field.name}"]`);
+      if (error) { error.id = `${field.id || field.name}-error`; field.setAttribute("aria-describedby", error.id); }
+      field.addEventListener("blur", () => {
+        if (field.required || field.value) validateField(form, field);
+      });
+      field.addEventListener("input", () => {
+        if (field.getAttribute("aria-invalid") === "true") validateField(form, field);
+      });
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const status = form.querySelector<HTMLElement>("[data-form-status]");
+      const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      const label = form.querySelector<HTMLElement>("[data-submit-label]");
+      const icon = form.querySelector<HTMLElement>("[data-submit-icon]");
+      const invalidFields = fields.filter((field) => !validateField(form, field));
+      const firstInvalid = invalidFields[0];
+
+      if (firstInvalid) {
+        firstInvalid.focus();
+        if (status) {
+          status.hidden = false;
+          status.dataset.state = "error";
+          status.textContent = "Sprawdź oznaczone pola i spróbuj ponownie.";
+        }
+        return;
+      }
+
+      const endpoint = form.dataset.endpoint;
+      if (!endpoint) {
+        if (status) {
+          status.hidden = false;
+          status.dataset.state = "notice";
+          status.innerHTML =
+            "<strong>Wysyłka nie jest jeszcze dostępna.</strong> Twoja wiadomość nie została wysłana. Wpisana treść pozostaje w formularzu — możesz pobrać jej kopię przyciskiem poniżej.";
+          status.focus();
+        }
+        return;
+      }
+
+      if (!submit || !label || !icon) return;
+      submit.disabled = true;
+      label.textContent = "Wysyłanie…";
+      icon.textContent = "•••";
+      if (status) status.hidden = true;
+
+      try {
+        const payload = Object.fromEntries(new FormData(form).entries());
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+          signal: AbortSignal.timeout(15000),
+        });
+
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        form.reset();
+        if (status) {
+          status.hidden = false;
+          status.dataset.state = "success";
+          status.innerHTML =
+            "<strong>Dziękuję — zapytanie zostało wysłane.</strong> Odpowiem w ciągu 1 dnia roboczego.";
+          status.focus();
+        }
+      } catch {
+        if (status) {
+          status.hidden = false;
+          status.dataset.state = "error";
+          status.innerHTML =
+            "<strong>Nie udało się potwierdzić wysyłki.</strong> Wpisana treść pozostała w formularzu. Spróbuj ponownie za chwilę.";
+          status.focus();
+        }
+      } finally {
+        submit.disabled = false;
+        label.textContent = "Wyślij zapytanie";
+        icon.textContent = "↗";
+      }
+    });
+  });
+</script>

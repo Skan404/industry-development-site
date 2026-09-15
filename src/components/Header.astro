@@ -1,0 +1,22 @@
+---
+import { navigation } from "../data/site";
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+---
+<header class="site-header" data-site-header>
+  <a class="brand" href="/" aria-label="Industry Development — strona główna">
+    <svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 9h7v18H5zM16 5h7v22h-7zM27 14h3v13h-3z" fill="currentColor"/><path d="M5 4h7v3H5z" fill="currentColor"/></svg>
+    <span>industry<span class="brand-second">development<span class="brand-dot">.</span></span></span>
+  </a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Otwórz menu" data-menu-toggle><span></span><span></span></button>
+  <nav id="primary-navigation" class="primary-nav" aria-label="Główna nawigacja">
+    <div class="nav-links" data-gooey-nav>
+      <span class="nav-blob" aria-hidden="true"></span>
+      {navigation.map(item => <a href={item.href} aria-current={path === item.href || (path === "/oferta" && item.href === "/uslugi") ? "page" : undefined}>{item.label}</a>)}
+    </div>
+    <a class="button button--small button--primary nav-cta" href="/kontakt#formularz">Porozmawiajmy <span aria-hidden="true">↗</span></a>
+  </nav>
+</header>
+<script>
+  import { initNavigation } from "../scripts/navigation";
+  initNavigation();
+</script>

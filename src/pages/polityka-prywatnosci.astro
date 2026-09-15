@@ -1,0 +1,115 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteConfig } from "../data/site";
+---
+
+<BaseLayout
+  title="Polityka prywatności — wersja robocza"
+  description="Robocza polityka prywatności serwisu Industry Development. Dokument wymaga weryfikacji prawnej i uzupełnienia danych przed publikacją."
+  noindex
+>
+  <section class="page-hero">
+    <div class="container page-hero__grid">
+      <span class="page-hero__index">05 / PRYWATNOŚĆ</span>
+      <div>
+        <p class="eyebrow">WERSJA ROBOCZA / DO WERYFIKACJI</p>
+        <h1>Polityka <em>prywatności.</em></h1>
+        <p class="page-hero__lead">
+          Czytelny szablon zasad przetwarzania danych. Przed publikacją musi
+          zostać uzupełniony i zatwierdzony pod kątem prawnym.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <article class="container container--narrow legal-content">
+      <div class="legal-notice">
+        <strong>Ważne: ten dokument jest placeholderem, a nie poradą prawną.</strong>
+        Wymaga weryfikacji przez osobę posiadającą odpowiednie kompetencje,
+        uzupełnienia danych administratora oraz dostosowania do faktycznie
+        używanych narzędzi przed uruchomieniem strony.
+      </div>
+
+      <p>Ostatnia aktualizacja: <strong>{siteConfig.privacyUpdatedAt}</strong></p>
+
+      <h2>1. Administrator danych</h2>
+      <p>
+        Administratorem danych osobowych jest {siteConfig.legalName},
+        prowadzona przez {siteConfig.owner}, adres: {siteConfig.address},
+        NIP: {siteConfig.nip}. Kontakt w sprawach prywatności:
+        {siteConfig.email}.
+      </p>
+
+      <h2>2. Jakie dane mogą być przetwarzane</h2>
+      <p>Za pośrednictwem formularza kontaktowego mogą być zbierane:</p>
+      <ul>
+        <li>imię i nazwisko oraz nazwa firmy;</li>
+        <li>adres e-mail i opcjonalnie numer telefonu;</li>
+        <li>techniczne informacje potrzebne do zabezpieczenia formularza przed nadużyciami.</li>
+      </ul>
+
+      <h2>3. Cele i podstawy przetwarzania</h2>
+      <p>Dane mogą być przetwarzane w celu:</p>
+      <ul>
+        <li>udzielenia odpowiedzi na zapytanie i podjęcia działań przed zawarciem umowy;</li>
+        <li>prowadzenia dalszej korespondencji związanej z ofertą;</li>
+        <li>zapewnienia bezpieczeństwa serwisu i obrony przed roszczeniami — jeśli ma to zastosowanie.</li>
+      </ul>
+      <p>
+        <strong>Do weryfikacji prawnej:</strong> właściwe podstawy prawne,
+        zakres prawnie uzasadnionego interesu oraz obowiązek informacyjny.
+      </p>
+
+      <h2>4. Odbiorcy i podmioty przetwarzające</h2>
+      <p>
+        Dane mogą być powierzane dostawcom infrastruktury, poczty elektronicznej
+        i zabezpieczeń wyłącznie w zakresie potrzebnym do świadczenia usługi.
+        Przed publikacją należy wskazać faktycznie używanych dostawców, w tym
+        Cloudflare oraz dostawcę poczty lub formularza.
+      </p>
+
+      <h2>5. Okres przechowywania</h2>
+      <p>
+        Wiadomości powinny być przechowywane przez okres potrzebny do obsługi zapytania,
+        a następnie przez czas wynikający z właściwych obowiązków lub okresu przedawnienia
+        roszczeń. Konkretne okresy wymagają potwierdzenia.
+      </p>
+
+      <h2>6. Prawa osoby, której dane dotyczą</h2>
+      <p>
+        W zależności od podstawy i okoliczności przetwarzania mogą przysługiwać prawa:
+        dostępu do danych, sprostowania, usunięcia, ograniczenia przetwarzania,
+        przenoszenia, wniesienia sprzeciwu oraz skargi do Prezesa Urzędu Ochrony
+        Danych Osobowych.
+      </p>
+
+      <h2>7. Pliki cookies i analityka</h2>
+      <p>
+        W podstawowej wersji serwis nie powinien uruchamiać marketingowych cookies
+        przed uzyskaniem wymaganej zgody. Jeżeli zostanie włączona analityka,
+        polityka i mechanizm zgody muszą zostać uzupełnione o faktyczne narzędzia,
+        cele, okresy oraz możliwość wycofania zgody.
+      </p>
+
+      <h2>8. Zabezpieczenie formularza</h2>
+      <p>
+        Formularz może korzystać z Cloudflare Turnstile w celu ograniczenia spamu.
+        Przed uruchomieniem należy opisać konfigurację, zakres przekazywanych danych
+        i odpowiednie dokumenty dostawcy.
+      </p>
+
+      <h2>9. Zmiany dokumentu</h2>
+      <p>
+        Polityka może być aktualizowana wraz ze zmianą sposobu działania serwisu
+        lub przepisów. Aktualna wersja będzie publikowana na tej stronie.
+      </p>
+
+      <h2>10. Kontakt</h2>
+      <p>
+        Pytania dotyczące danych osobowych można kierować na adres:
+        {siteConfig.email}.
+      </p>
+    </article>
+  </section>
+</BaseLayout>

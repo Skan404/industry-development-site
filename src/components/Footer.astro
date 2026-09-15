@@ -1,0 +1,15 @@
+---
+import { navigation, siteConfig } from "../data/site";
+---
+<footer class="site-footer">
+  <div class="container footer-top">
+    <a href="/" class="footer-wordmark">industry development<span>.</span></a>
+    <p>Dobry projekt. Solidne wykonanie.<br />Spokojna głowa.</p>
+    <nav aria-label="Nawigacja w stopce">{navigation.map(item => <a href={item.href}>{item.label}</a>)}</nav>
+  </div>
+  <div class="container footer-bottom">
+    <span>© {new Date().getFullYear()} {siteConfig.legalName}</span>
+    <span class="footer-location"><i></i> Płońsk · Działamy w całej Polsce</span>
+    <a href="/polityka-prywatnosci">Polityka prywatności</a>
+  </div>
+</footer>

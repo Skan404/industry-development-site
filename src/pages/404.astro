@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Nie znaleziono strony"
+  description="Ta strona nie istnieje lub została przeniesiona."
+  noindex
+>
+  <section class="error-page">
+    <div class="container error-page__inner">
+      <span class="error-page__code" aria-hidden="true">404</span>
+      <div class="error-page__content">
+        <p class="kicker kicker--blue">BŁĄD / 404</p>
+        <h1>Ta ścieżka prowadzi donikąd.</h1>
+        <p>
+          Adres mógł się zmienić albo strona nie istnieje.
+          Wróć na początek i wybierz właściwy kierunek.
+        </p>
+        <a class="button button--primary" href="/">Wróć na stronę główną <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

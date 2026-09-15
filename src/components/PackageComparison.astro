@@ -1,0 +1,18 @@
+---
+import { packages, packageComparison } from "../data/site";
+interface Props { id?: string }
+const { id = "porownanie" } = Astro.props;
+---
+<div class="package-comparison" id={id}>
+  <div class="comparison-heading"><h3 id={`${id}-title`}>Porównaj, co otrzymujesz.</h3><p>Te same solidne podstawy. Konkretny zakres dodatkowej opieki.</p></div>
+  <p class="comparison-scroll-hint" id={`${id}-hint`}>Na małym ekranie przesuń tabelę w bok, aby porównać wszystkie pakiety. ↔</p>
+  <div class="comparison-scroll" tabindex="0" role="region" aria-labelledby={`${id}-title`} aria-describedby={`${id}-hint`}>
+    <table class="package-table">
+      <caption class="sr-only">Porównanie zakresu pakietów Start, Rozwój i Premium</caption>
+      <thead><tr><th scope="col">W Twoim pakiecie</th>{packages.map(item => <th scope="col" class:list={{ recommended: item.highlighted }}><span>{item.name}</span><small>{item.price} zł netto / mies.</small></th>)}</tr></thead>
+      <tbody>{packageComparison.map(row => <tr><th scope="row">{row.label}</th>{row.values.map((value, index) => <td class:list={{ recommended: index === 1 }}><span class:list={{ "table-check": value === "✓", "table-empty": value === "—" }} aria-label={value === "✓" ? "W pakiecie" : value === "—" ? "Poza pakietem" : undefined}>{value}</span></td>)}</tr>)}</tbody>
+      <tfoot><tr><th scope="row">Porozmawiajmy o współpracy</th>{packages.map(item => <td><a class="text-link" href="/kontakt#formularz">Wybierz {item.name} <span aria-hidden="true">↗</span></a></td>)}</tr></tfoot>
+    </table>
+  </div>
+  <p class="comparison-note">Zakres opieki dotyczy jednej firmy i jednego Profilu Firmy w Google. Materiały do publikacji dostarczasz Ty. Publikacje i obsługa profilu Google nie pomniejszają czasu drobnych zmian na stronie. Czas pierwszej odpowiedzi nie oznacza terminu zakończenia prac. Poczta obejmuje konfigurację jednej skrzynki we własnej domenie; szczegóły dostawcy i ewentualne opłaty zewnętrzne ustalamy przed rozpoczęciem.</p>
+</div>
