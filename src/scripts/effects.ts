@@ -30,10 +30,10 @@ function lightRays(canvas: HTMLCanvasElement): RenderEffect | null {
     void main(){
       vec2 coord=vec2(gl_FragCoord.x,resolution.y-gl_FragCoord.y);
       float sweep=.5-.5*cos(time*.30);
-      vec2 source=vec2(resolution.x*mix(.12,.88,sweep),-resolution.y*.3);
-      vec2 direction=normalize(vec2(mix(.55,-.55,sweep)+pointer.x*.07,1.));
+      vec2 source=vec2(resolution.x*.12,-resolution.y*.3);
+      vec2 direction=normalize(vec2(mix(-.30,1.10,sweep)+pointer.x*.07,1.));
       float a=ray(source,direction,coord,76.2214,51.11349);
-      float b=ray(source+vec2(resolution.x*.05,0.),direction,coord,52.3991,38.0234);
+      float b=ray(source,direction,coord,52.3991,38.0234);
       float glow=(a*.55+b*.35)*.64;
       float edge=1.-smoothstep(.58,1.,coord.y/resolution.y);
       gl_FragColor=vec4(vec3(.40,.85,.69),glow*edge);

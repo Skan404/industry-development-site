@@ -39,16 +39,17 @@ export const packages: readonly Package[] = [
   {
     id: "start",
     name: "Start",
-    price: 299,
+    price: 199,
     description:
       "Twoja strona i firmowa poczta. Wszystko, czego potrzebujesz na początek.",
     features: [
       "Strona, hosting, SSL, formularz i utrzymanie",
       "Firmowa poczta we własnej domenie",
+      "Link do opinii, kod QR i projekt karty",
       "Nowe realizacje w ramach czasu zmian",
     ],
     changes: "15 minut drobnych zmian miesięcznie",
-    response: "Pierwsza odpowiedź: do 2 dni roboczych",
+    response: "Pierwsza odpowiedź: do 3 dni roboczych",
   },
   {
     id: "rozwoj",
@@ -61,14 +62,14 @@ export const packages: readonly Package[] = [
     features: [
       "Strona, hosting, SSL, formularz i utrzymanie",
       "Firmowa poczta we własnej domenie",
-      "Założenie lub uporządkowanie 1 profilu Google",
-      "Kontrola profilu raz w miesiącu + zgłoszone zmiany",
-      "2 publikacje i do 5 odpowiedzi na opinie / mies.",
       "Link do opinii, kod QR i projekt karty",
+      "Założenie lub uporządkowanie profilu Google",
+      "Kontrola profilu raz w miesiącu + zgłoszone zmiany",
+      "2 publikacje / mies. i odpowiedzi na wszystkie opinie",
       "Nowe realizacje w ramach czasu zmian",
     ],
     changes: "30 minut drobnych zmian miesięcznie",
-    response: "Pierwsza odpowiedź: do 1 dnia roboczego",
+    response: "Pierwsza odpowiedź: do 2 dni roboczych",
   },
   {
     id: "premium",
@@ -79,14 +80,15 @@ export const packages: readonly Package[] = [
     features: [
       "Strona, hosting, SSL, formularz i utrzymanie",
       "Firmowa poczta we własnej domenie",
-      "1 profil Google: 4 publikacje i do 15 odpowiedzi / mies.",
-      "Kontrola profilu i zestaw do zbierania opinii",
+      "Link do opinii, kod QR i projekt karty",
+      "4 publikacje / mies. i odpowiedzi na wszystkie opinie",
+      "Założenie lub uporządkowanie profilu Google i stała opieka",
       "Rezerwacje lub rozbudowany formularz wyceny",
       "1 scenariusz automatycznego porządkowania zapytań",
       "1 nowa realizacja miesięcznie poza limitem zmian",
     ],
     changes: "60 minut drobnych zmian miesięcznie",
-    response: "Pierwsza odpowiedź: do 4 godzin roboczych",
+    response: "Pierwsza odpowiedź: do 1 dnia roboczego",
   },
 ] as const;
 
@@ -101,7 +103,7 @@ export const packageComparison: readonly {
   { label: "Firmowa poczta we własnej domenie", values: ["✓", "✓", "✓"] },
   {
     label: "Założenie lub uporządkowanie Profilu Firmy w Google",
-    values: ["—", "1 profil", "1 profil"],
+    values: ["—", "✓", "✓"],
   },
   {
     label: "Aktualizacja godzin, usług i danych wizytówki",
@@ -117,11 +119,11 @@ export const packageComparison: readonly {
   },
   {
     label: "Odpowiedzi na opinie",
-    values: ["—", "Do 5 miesięcznie", "Do 15 miesięcznie"],
+    values: ["—", "Wszystkie opinie", "Wszystkie opinie"],
   },
   {
     label: "Zestaw do zbierania opinii",
-    values: ["—", "Link, kod QR i projekt karty do wydruku", "Jak w Rozwoju"],
+    values: ["Link, kod QR i projekt karty do wydruku", "Jak w Starcie", "Jak w Starcie"],
   },
   {
     label: "Rezerwacje lub rozbudowany formularz wyceny",
@@ -146,15 +148,15 @@ export const packageComparison: readonly {
   {
     label: "Pierwsza odpowiedź na zgłoszenie",
     values: [
+      "Do 3 dni roboczych",
       "Do 2 dni roboczych",
       "Do 1 dnia roboczego",
-      "Do 4 godzin roboczych",
     ],
   },
 ];
 
 export const pricingNote =
-  "Ceny netto dla firm. Domena i płatne usługi zewnętrzne rozliczane oddzielnie. Niewykorzystany czas zmian nie przechodzi na kolejny miesiąc. Po 24 miesiącach klient może kontynuować opiekę albo przejąć witrynę na zasadach określonych w umowie. Szczegółowy zakres potwierdzamy przed rozpoczęciem.";
+  "Ceny netto dla firm. Po 24 miesiącach klient może kontynuować opiekę albo przejąć witrynę na zasadach określonych w umowie. Szczegółowy zakres potwierdzamy przed rozpoczęciem.";
 
 // UWAGA PRAWNA: finalne warunki pakietów, przeniesienia witryny i rezygnacji
 // wymagają zatwierdzenia po przygotowaniu właściwej umowy B2B.
@@ -163,7 +165,7 @@ export const faqs = [
   {
     question: "Czy naprawdę nie ma opłaty za wdrożenie?",
     answer:
-      "Tak. W modelu abonamentowym opłata wdrożeniowa wynosi 0 zł przy umowie B2B na minimum 24 miesiące. Domena i ewentualne płatne usługi zewnętrzne są rozliczane osobno.",
+      "Tak. W modelu abonamentowym opłata wdrożeniowa wynosi 0 zł przy umowie B2B na minimum 24 miesiące. Koszt domeny i usług zewnętrznych potrzebnych do realizacji zakresu pakietu jest wliczony w abonament.",
   },
   {
     question: "Dlaczego okres minimalny wynosi 24 miesiące?",
@@ -183,7 +185,7 @@ export const faqs = [
   {
     question: "Ile poprawek mogę zgłosić?",
     answer:
-      "Na etapie projektu uzgadniamy kierunek i zakres rund poprawek w briefie. Po publikacji każdy pakiet zawiera miesięczny limit drobnych zmian: 15, 30 lub 60 minut. Niewykorzystany czas nie przechodzi na kolejny miesiąc.",
+      "Na etapie projektu uzgadniamy kierunek i zakres rund poprawek w briefie. Po publikacji każdy pakiet zawiera miesięczny limit drobnych zmian: 15, 30 lub 60 minut.",
   },
   {
     question: "Jak długo trwa przygotowanie strony?",

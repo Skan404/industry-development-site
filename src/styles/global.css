@@ -520,9 +520,9 @@ article[id] {
 }
 .effect--rays .effect-fallback {
   background:
-    radial-gradient(ellipse at 63% -12%, #527c523d, transparent 53%),
+    radial-gradient(ellipse at 12% -12%, #527c523d, transparent 53%),
     conic-gradient(
-      from 175deg at 76% -10%,
+      from 145deg at 12% -10%,
       transparent 4deg,
       #94dca01b 13deg,
       transparent 19deg,
@@ -531,6 +531,9 @@ article[id] {
       #8ee6ae0b 39deg,
       transparent 46deg
     );
+}
+.effect--rays[data-ready="true"] .effect-fallback {
+  opacity: 0;
 }
 .effect--pixels {
   mask-image: linear-gradient(

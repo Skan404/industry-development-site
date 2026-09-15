@@ -18,8 +18,8 @@ const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL ?? "";
   method="post"
   action={endpoint || undefined}
 >
-  {!endpoint && <div class="form-notice">Wysyłka formularza nie jest jeszcze dostępna. Możesz uzupełnić dane i pobrać ich kopię.{contactEmail && <> Możesz też <a href={`mailto:${contactEmail}`}>napisać bezpośrednio do nas</a>.</>}</div>}
-  <noscript><p class="form-notice">Do obsługi tego formularza potrzebny jest JavaScript.{contactEmail && <a href={`mailto:${contactEmail}`}> Napisz e-mail.</a>}</p><style>.form-submit,.draft-button{display:none!important}</style></noscript>
+  {!endpoint && <div class="form-notice">Wysyłka formularza nie jest jeszcze dostępna.{contactEmail && <> Możesz też <a href={`mailto:${contactEmail}`}>napisać bezpośrednio do nas</a>.</>}</div>}
+  <noscript><p class="form-notice">Do obsługi tego formularza potrzebny jest JavaScript.{contactEmail && <a href={`mailto:${contactEmail}`}> Napisz e-mail.</a>}</p><style>.form-submit{display:none!important}</style></noscript>
   <div class="form-grid">
     <div class="field">
       <label for={`name-${compact ? "compact" : "full"}`}>Imię i nazwisko <span aria-hidden="true">*</span></label>
@@ -78,7 +78,6 @@ const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL ?? "";
     <p>Odpowiedź w ciągu 1 dnia roboczego.</p>
   </div>
   <div class="form-status" role="status" aria-live="polite" tabindex="-1" data-form-status hidden></div>
-  {!endpoint && <button class="button button--outline draft-button" type="button" data-download-draft>Pobierz kopię zgłoszenia ↓</button>}
 </form>
 
 <script>
@@ -102,18 +101,6 @@ const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL ?? "";
 
   forms.forEach((form) => {
     form.noValidate = true;
-    form.querySelector("[data-download-draft]")?.addEventListener("click", () => {
-      const labels: Record<string, string> = { name: "Imię i nazwisko", company: "Firma", email: "E-mail", phone: "Telefon" };
-      const lines = Object.entries(labels).map(([name, label]) => {
-        const field = form.elements.namedItem(name);
-        const value = field instanceof HTMLSelectElement ? field.selectedOptions[0]?.textContent : field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement ? field.value : "";
-        return `${label}: ${value || "—"}`;
-      });
-      const blob = new Blob(["Industry Development — kopia zapytania (niewysłana)\n\n", lines.join("\n\n")], { type: "text/plain;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a"); link.href = url; link.download = "moje-zapytanie.txt"; link.click();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-    });
     const fields = Array.from(
       form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
         "input:not([name='companyUrl']), select, textarea"
@@ -156,7 +143,7 @@ const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL ?? "";
           status.hidden = false;
           status.dataset.state = "notice";
           status.innerHTML =
-            "<strong>Wysyłka nie jest jeszcze dostępna.</strong> Twoja wiadomość nie została wysłana. Wpisana treść pozostaje w formularzu — możesz pobrać jej kopię przyciskiem poniżej.";
+            "<strong>Wysyłka nie jest jeszcze dostępna.</strong> Twoja wiadomość nie została wysłana. Wpisane dane pozostają w formularzu.";
           status.focus();
         }
         return;
