@@ -18,12 +18,13 @@ const steps = [
     <section class="hero container" aria-labelledby="hero-title">
       <div class="hero-coordinates" aria-hidden="true"><span>52°37′N 20°22′E</span><span>Niezależne studio cyfrowe</span></div>
       <p class="eyebrow hero-eyebrow"><i></i> Małe studio. Duże możliwości.</p>
-      <h1 id="hero-title">Twoja firma.<br />Jej <em>nowy wymiar.</em></h1>
+      <h1 id="hero-title" data-typewriter aria-label="Twoja firma. Jej nowy wymiar."><span class="type-line" aria-hidden="true"><span class="type-reserve">Twoja firma.</span><span data-type-first>Twoja firma.</span></span><span class="type-line" aria-hidden="true"><span class="type-reserve">Jej <em>nowa reklama.</em></span><span><span data-type-prefix>Jej </span><em data-type-ending>nowy wymiar.</em></span></span></h1>
       <p class="hero-lead">Tworzymy strony, które przyciągają uwagę<br class="desktop-break" /> i ułatwiają klientom wybór Twojej firmy.</p>
       <div class="hero-actions">
         <a href="/kontakt#formularz" class="button button--primary">Porozmawiajmy o projekcie <span aria-hidden="true">↗</span></a>
         <a href="/uslugi" class="button button--outline">Poznaj nasze usługi <span aria-hidden="true">↓</span></a>
       </div>
+      <button class="type-pause" data-type-pause type="button" aria-pressed="false" hidden>Wstrzymaj animację tekstu</button>
       <p class="hero-note">Projekt, wdrożenie i opieka. W jednym miejscu.</p>
       <div class="hero-bottom"><span>Projektujemy lokalnie.<br /><strong>Działamy bez granic.</strong></span><a class="scroll-hint" href="#mozliwosci"><span class="scroll-line" aria-hidden="true"></span> Zobacz, co możemy zrobić</a><span class="hero-availability"><i></i> Płońsk / cała Polska</span></div>
     </section>
@@ -51,3 +52,7 @@ const steps = [
     <ClosingCTA />
   </div>
 </BaseLayout>
+
+<script>
+  import "../scripts/content-motion";
+</script>

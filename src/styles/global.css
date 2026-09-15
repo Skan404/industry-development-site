@@ -2836,3 +2836,14 @@ article[id] {
 @media (max-width: 380px) {
   .package-table th:first-child { position: static; box-shadow: none; }
 }
+
+/* Content motion stays optional; server-rendered content is visible without JS. */
+.reveal-pending { opacity: 0; }
+.reveal-pending:focus-within { opacity: 1; }
+.type-line { display: grid; }
+.type-line > span { grid-area: 1 / 1; }
+.type-reserve { visibility: hidden; pointer-events: none; }
+.type-pause { display: block; margin: 18px auto 0; padding: 8px 12px; color: var(--muted); background: transparent; border: 0; font: inherit; font-size: 11px; cursor: pointer; }
+.type-pause[hidden] { display: none; }
+.type-pause:hover { color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .reveal-pending { opacity: 1; } }
