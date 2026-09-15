@@ -21,7 +21,7 @@ if ("IntersectionObserver" in window) {
       observer.unobserve(entry.target);
       reveal(entry.target as HTMLElement, mobile.matches ? 0 : Math.min(index * 140, 420));
     });
-  }, { threshold: 0, rootMargin: "0px 0px -55px 0px" });
+  }, { threshold: 0, rootMargin: "0px 0px -120px 0px" });
   targets.forEach(element => {
     if (!reduced.matches && element.getBoundingClientRect().top > window.innerHeight) element.classList.add("reveal-pending");
     observer.observe(element);
