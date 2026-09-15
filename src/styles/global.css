@@ -2847,3 +2847,9 @@ article[id] {
 .type-pause[hidden] { display: none; }
 .type-pause:hover { color: var(--ink); }
 @media (prefers-reduced-motion: reduce) { .reveal-pending { opacity: 1; } }
+
+/* Leave room for the italic glyph overhang inside the text gradient. */
+.hero h1 em, .subpage-hero h1 em { padding-inline-end: .16em; margin-inline-end: -.16em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.type-once { display: grid; }
+.type-once > span { grid-area: 1 / 1; min-width: 0; }
+.type-once-reserve { visibility: hidden; pointer-events: none; }

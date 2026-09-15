@@ -1,7 +1,7 @@
 const reduced = matchMedia("(prefers-reduced-motion: reduce)");
 const mobile = matchMedia("(max-width: 760px)");
 const targets = Array.from(document.querySelectorAll<HTMLElement>(
-  ".section-heading, .service-card, .process-grid > li, .pricing-card, .comparison-heading, .comparison-scroll, .faq-section > div:first-child, .faq-item",
+  ".section-heading, .service-card, .process-grid > li, .pricing-card, .comparison-heading, .comparison-scroll, .faq-section > div:first-child, .faq-item, .subpage-hero > p, .subpage-hero > a, .service-detail, .included-strip, .portfolio-empty, .portfolio-item, .contact-details, .form-card, .closing-card",
 ));
 const animations = new Set<Animation>();
 const reveal = (element: HTMLElement, delay = 0) => {
@@ -21,7 +21,7 @@ if ("IntersectionObserver" in window) {
       observer.unobserve(entry.target);
       reveal(entry.target as HTMLElement, mobile.matches ? 0 : Math.min(index * 140, 420));
     });
-  }, { threshold: 0, rootMargin: "0px 0px -120px 0px" });
+  }, { threshold: 0, rootMargin: "0px 0px -160px 0px" });
   targets.forEach(element => {
     if (!reduced.matches && element.getBoundingClientRect().top > window.innerHeight) element.classList.add("reveal-pending");
     observer.observe(element);
@@ -44,6 +44,56 @@ const first = heading?.querySelector<HTMLElement>("[data-type-first]");
 const prefix = heading?.querySelector<HTMLElement>("[data-type-prefix]");
 const ending = heading?.querySelector<HTMLElement>("[data-type-ending]");
 const pause = document.querySelector<HTMLButtonElement>("[data-type-pause]");
+
+// Preserve line breaks and emphasis while reserving the complete heading height.
+document.querySelectorAll<HTMLElement>(".subpage-hero h1").forEach(title => {
+  if (reduced.matches || !("IntersectionObserver" in window)) return;
+  const fullText = title.innerText.replace(/\s+/g, " ").trim();
+  const reserve = document.createElement("span");
+  reserve.className = "type-once-reserve";
+  const text = document.createElement("span");
+  while (title.firstChild) text.append(title.firstChild);
+  reserve.append(...Array.from(text.childNodes, node => node.cloneNode(true)));
+  reserve.setAttribute("aria-hidden", "true");
+  text.setAttribute("aria-hidden", "true");
+  title.setAttribute("aria-label", fullText);
+  title.classList.add("type-once");
+  title.append(reserve, text);
+  const walker = document.createTreeWalker(text, NodeFilter.SHOW_TEXT);
+  const parts: { node: Node; value: string }[] = [];
+  while (walker.nextNode()) parts.push({ node: walker.currentNode, value: walker.currentNode.textContent ?? "" });
+  parts.forEach(part => { part.node.textContent = ""; });
+  const length = parts.reduce((sum, part) => sum + part.value.length, 0);
+  let count = 0;
+  let visible = false;
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const stop = () => { clearTimeout(timer); timer = undefined; };
+  const paint = () => {
+    let remaining = count;
+    parts.forEach(part => {
+      part.node.textContent = part.value.slice(0, Math.max(0, remaining));
+      remaining -= part.value.length;
+    });
+  };
+  const run = () => {
+    stop();
+    if (!visible || document.hidden || count >= length) return;
+    timer = setTimeout(() => { count++; paint(); run(); }, 45 + Math.random() * 45);
+  };
+  const observer = new IntersectionObserver(entries => {
+    visible = entries[0]?.isIntersecting ?? false;
+    run();
+  });
+  observer.observe(title);
+  reduced.addEventListener("change", () => {
+    if (!reduced.matches) return;
+    stop(); count = length; paint(); observer.disconnect();
+  });
+  document.addEventListener("visibilitychange", run);
+  window.addEventListener("pagehide", stop);
+  window.addEventListener("pageshow", run);
+});
+
 if (heading && first && prefix && ending && pause && "IntersectionObserver" in window) {
   const phrases = ["Jej nowy wymiar.", "Jej nowa strona.", "Jej nowa reklama.", "Jej nowi klienci."] as const;
   let phase: "first" | "typing" | "deleting" = "first";
