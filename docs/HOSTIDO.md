@@ -1,5 +1,7 @@
 # IndDev — paczka przedwdrożeniowa dla Hostido + Cloudflare
 
+**Wariant archiwalny.** Wybrano hosting Cloudflare Workers, a Hostido pozostaje rejestratorem domeny. Aktualne kroki są w CLOUDFLARE.md; nie wdrażaj tej paczki.
+
 Ta paczka jest przygotowana lokalnie. Nie została opublikowana i nie zawiera haseł ani config.php. Publiczny formularz pozostaje wyłączony, dopóki nie zostaną skonfigurowane serwer i klucze. Domena docelowa: https://www.inddev.pl.
 
 ## Struktura na Hostido

@@ -55,7 +55,7 @@ if (process.env.PUBLIC_FORM_ENABLED !== 'true') blockers.push('Configure backend
 const key = process.env.PUBLIC_TURNSTILE_SITE_KEY || '';
 if (!key || /000000000000000000/.test(key)) blockers.push('Set a real production Turnstile sitekey (not test key)');
 if (production) {
-  check(contact.includes('data-endpoint="/api/contact.php"'), 'Built frontend does not target the production endpoint');
+  check(contact.includes('data-endpoint="/api/contact"'), 'Built frontend does not target the production endpoint');
   check(contact.includes('data-sitekey=') && contact.includes(key), 'Built frontend does not contain the configured Turnstile key');
   errors.push(...blockers);
 }

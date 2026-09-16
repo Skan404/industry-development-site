@@ -8,7 +8,7 @@ interface Props {
 }
 
 const { compact = false } = Astro.props;
-const endpoint = import.meta.env.PUBLIC_CONTACT_ENDPOINT || "/api/contact.php";
+const endpoint = import.meta.env.PUBLIC_CONTACT_ENDPOINT || "/api/contact";
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
 const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL || siteConfig.email;
 const enabled = import.meta.env.PUBLIC_FORM_ENABLED === "true" && Boolean(turnstileSiteKey);

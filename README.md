@@ -1,5 +1,11 @@
 # Industry Development / IndDev
 
+## Aktualny hosting: Cloudflare Workers
+
+Wybrano darmowy hosting Cloudflare; Hostido jest wyłącznie rejestratorem domeny. Aktualna instrukcja: [docs/CLOUDFLARE.md](docs/CLOUDFLARE.md). Build: `npm run build:cloudflare`, kontrola bez publikacji: `npm run check:cloudflare`. Backend: `worker/index.mjs`, endpoint `/api/contact`. Sekret Turnstile wpisuje właściciel w panelu Cloudflare. Formularz wysyła wyłącznie do zweryfikowanego Gmaila.
+
+Poniższa dokumentacja Hostido i katalog server/ zachowują poprzedni wariant. Nie są częścią wdrożenia Cloudflare. Raport PREDEPLOY-QA.md dotyczy poprzedniego etapu; aktualne kontrole Cloudflare opisuje docs/CLOUDFLARE-QA.md.
+
 Strona Astro dla https://www.inddev.pl. Główna, Usługi, Realizacje, Kontakt, Polityka prywatności i Regulamin. Hosting docelowy: Hostido + Cloudflare. Na tym etapie brak publikacji i konfiguracji kont.
 
 ## Lokalnie
