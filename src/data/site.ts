@@ -1,17 +1,19 @@
+import business from "../../config/site.json";
+
 export const siteConfig = {
-  legalName: "Industry Development",
+  legalName: business.brand,
   descriptor: "Niezależne studio cyfrowe",
-  owner: "{IMIE_I_NAZWISKO}",
-  phone: "{TELEFON}",
-  email: "{EMAIL}",
-  calendarUrl: "{LINK_DO_KALENDARZA}",
-  nip: "{NIP}",
-  address: "{ADRES_FIRMY}",
-  privacyUpdatedAt: "{DATA_AKTUALIZACJI}",
+  owner: business.companyName,
+  phone: business.contactPhone,
+  email: business.contactEmail,
+  calendarUrl: "",
+  nip: business.nip,
+  address: `${business.street}, ${business.postalCode} ${business.city}`,
+  privacyUpdatedAt: "15 września 2026 r.",
   location: "Płońsk, województwo mazowieckie",
   serviceArea: "Płońsk i okolice oraz zdalnie cała Polska",
   defaultDescription:
-    "Nowoczesne strony abonamentowe dla firm wykończeniowych i branży urody z Płońska i Mazowsza. Bez wysokiego kosztu na start, ze stałą opieką.",
+    "Projektowanie stron internetowych dla firm z Płońska i całej Polski. Strony w abonamencie od 199 zł netto miesięcznie, hosting, poczta i stała opieka.",
 } as const;
 
 export const navigation = [
@@ -206,35 +208,6 @@ export const faqs = [
     question: "Czy muszę dostarczyć gotowe teksty i zdjęcia?",
     answer:
       "Nie musisz mieć gotowego tekstu. Pomogę uporządkować najważniejsze informacje, a zakres tej pomocy zależy od pakietu. Zdjęcia powinny być Twoje lub pochodzić z legalnego źródła; wspólnie ustalimy, czego potrzeba.",
-  },
-] as const;
-
-export const projectConcepts = [
-  {
-    slug: "nova-wnetrza",
-    index: "01",
-    name: "Nova Wnętrza",
-    sector: "Wykończenia / remonty",
-    tone: "graphite",
-    problem:
-      "Rozproszona oferta i brak prostego sposobu, by ocenić jakość pracy przed pierwszym telefonem.",
-    direction:
-      "Edytorialna prezentacja wnętrz, precyzyjna typografia i uporządkowany podział usług bez budowlanego banału.",
-    conversion:
-      "Portfolio prowadzi do krótkiego briefu z wyborem rodzaju nieruchomości i planowanego terminu.",
-  },
-  {
-    slug: "atelier-forma",
-    index: "02",
-    name: "Atelier Forma",
-    sector: "Uroda i pielęgnacja",
-    tone: "ivory",
-    problem:
-      "Oferta usług jest trudna do porównania, a ważne informacje o rezerwacji giną w mediach społecznościowych.",
-    direction:
-      "Ciepły minimalizm, subtelna typografia i struktura, która buduje jakość bez stereotypowej, różowej estetyki.",
-    conversion:
-      "Karta zabiegu odpowiada na kluczowe pytania i kieruje bezpośrednio do rezerwacji konsultacji.",
   },
 ] as const;
 

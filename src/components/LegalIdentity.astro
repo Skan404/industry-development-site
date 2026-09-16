@@ -1,0 +1,4 @@
+---
+import business from "../../config/site.json";
+---
+{business.legalIdentityConfirmed ? <p><strong>{business.companyName}</strong><br />{business.street}, {business.postalCode} {business.city}<br />NIP: {business.nip}<br />Kontakt: <a href={`mailto:${business.contactEmail}`}>{business.contactEmail}</a></p> : <p class="legal-notice">Dokument przygotowany do odbioru przed publikacją. Dane podmiotu prowadzącego IndDev i administratora danych wymagają potwierdzenia właściciela serwisu.</p>}

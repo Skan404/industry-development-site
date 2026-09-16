@@ -5,13 +5,13 @@ import { siteConfig } from "../data/site";
 const email = import.meta.env.PUBLIC_CONTACT_EMAIL || (siteConfig.email.includes("{") ? "" : siteConfig.email);
 const phone = import.meta.env.PUBLIC_CONTACT_PHONE || (siteConfig.phone.includes("{") ? "" : siteConfig.phone);
 ---
-<BaseLayout title="Kontakt" description="Porozmawiajmy o Twojej stronie. Zostaw kontakt i umów bezpłatną konsultację. Płońsk i zdalnie cała Polska.">
+<BaseLayout title="Kontakt — projektowanie stron w Płońsku" description="Porozmawiajmy o Twojej stronie. Zostaw kontakt i umów bezpłatną konsultację. Płońsk i zdalnie cała Polska.">
   <section class="subpage-hero container contact-hero"><p class="eyebrow"><i></i> Kontakt / Wszystko zaczyna się od rozmowy</p><h1>Dobry pomysł?<br /><em>Dajmy mu początek.</em></h1><p>Nie musisz mieć gotowego planu.<br />Zostaw swoje dane. Odeślemy propozycję krótkiej rozmowy.</p></section>
   <section id="formularz" class="container contact-page-grid" aria-labelledby="form-title">
     <aside class="contact-details"><p class="eyebrow">Poznajmy się</p><h2>Po drugiej stronie<br /><em>jest człowiek.</em></h2><p>Bez handlowej prezentacji i zobowiązań. Sprawdzimy, jak możemy pomóc i który zakres ma dla Ciebie sens.</p><div class="contact-details__list">
       {email && <div class="contact-details__row"><span>Napisz bezpośrednio</span><a href={`mailto:${email}`}>{email} ↗</a></div>}
       {phone && <div class="contact-details__row"><span>Zadzwoń</span><a href={`tel:${phone.replace(/[^+\d]/g, "")}`}>{phone}</a></div>}
-      <div class="contact-details__row"><span>Blisko Ciebie, również zdalnie</span><strong>Płońsk i cała Polska</strong></div></div>
+      <div class="contact-details__row"><span>Usługodawca</span><strong>{siteConfig.owner}</strong></div><div class="contact-details__row"><span>Adres firmy</span><strong>{siteConfig.address}</strong></div><div class="contact-details__row"><span>NIP</span><strong>{siteConfig.nip}</strong></div></div>
       <div class="contact-expect"><span class="eyebrow">Co dalej?</span><ol><li><span>01</span> Otrzymujemy Twoje dane kontaktowe.</li><li><span>02</span> Wracamy z pytaniami w ciągu 1 dnia roboczego.</li><li><span>03</span> Ustalamy termin bezpłatnej konsultacji.</li></ol></div>
     </aside>
     <div class="form-card glow-card"><div class="form-heading"><h2 id="form-title">Zostaw kontakt do siebie.</h2><p>Pola z gwiazdką są wymagane.</p></div><ContactForm /></div>

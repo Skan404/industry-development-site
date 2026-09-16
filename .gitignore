@@ -14,3 +14,9 @@ docs/previous-design/
 !.env.example
 artifacts/
 update-site.mjs
+.tools/
+release/
+server/vendor/
+server/config.php
+server/storage/
+*.zip

@@ -1,44 +1,47 @@
 ---
 
 
+import { siteConfig } from "../data/site";
+
 interface Props {
   compact?: boolean;
 }
 
 const { compact = false } = Astro.props;
-const endpoint = import.meta.env.PUBLIC_CONTACT_ENDPOINT ?? "";
+const endpoint = import.meta.env.PUBLIC_CONTACT_ENDPOINT || "/api/contact.php";
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
-const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL ?? "";
+const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL || siteConfig.email;
+const enabled = import.meta.env.PUBLIC_FORM_ENABLED === "true" && Boolean(turnstileSiteKey);
 ---
 
 <form
   class:list={["contact-form", { "contact-form--compact": compact }]}
   data-contact-form
-  data-endpoint={endpoint}
+  data-endpoint={enabled ? endpoint : ""}
   method="post"
-  action={endpoint || undefined}
+  action={enabled ? endpoint : undefined}
 >
-  {!endpoint && <div class="form-notice">Wysyłka formularza nie jest jeszcze dostępna.{contactEmail && <> Możesz też <a href={`mailto:${contactEmail}`}>napisać bezpośrednio do nas</a>.</>}</div>}
+  {!enabled && <div class="form-notice">Wysyłka formularza nie jest jeszcze dostępna.{contactEmail && <> Możesz też <a href={`mailto:${contactEmail}`}>napisać bezpośrednio do nas</a>.</>}</div>}
   <noscript><p class="form-notice">Do obsługi tego formularza potrzebny jest JavaScript.{contactEmail && <a href={`mailto:${contactEmail}`}> Napisz e-mail.</a>}</p><style>.form-submit{display:none!important}</style></noscript>
   <div class="form-grid">
     <div class="field">
       <label for={`name-${compact ? "compact" : "full"}`}>Imię i nazwisko <span aria-hidden="true">*</span></label>
-      <input id={`name-${compact ? "compact" : "full"}`} name="name" type="text" autocomplete="name" required />
+      <input id={`name-${compact ? "compact" : "full"}`} name="name" type="text" autocomplete="name" maxlength="100" required />
       <span class="field__error" data-error-for="name"></span>
     </div>
     <div class="field">
       <label for={`company-${compact ? "compact" : "full"}`}>Nazwa firmy <span aria-hidden="true">*</span></label>
-      <input id={`company-${compact ? "compact" : "full"}`} name="company" type="text" autocomplete="organization" required />
+      <input id={`company-${compact ? "compact" : "full"}`} name="company" type="text" autocomplete="organization" maxlength="160" required />
       <span class="field__error" data-error-for="company"></span>
     </div>
     <div class="field">
       <label for={`email-${compact ? "compact" : "full"}`}>E-mail <span aria-hidden="true">*</span></label>
-      <input id={`email-${compact ? "compact" : "full"}`} name="email" type="email" inputmode="email" autocomplete="email" required />
+      <input id={`email-${compact ? "compact" : "full"}`} name="email" type="email" inputmode="email" autocomplete="email" maxlength="254" required />
       <span class="field__error" data-error-for="email"></span>
     </div>
     <div class="field">
       <label for={`phone-${compact ? "compact" : "full"}`}>Telefon <span>(opcjonalnie)</span></label>
-      <input id={`phone-${compact ? "compact" : "full"}`} name="phone" type="tel" inputmode="tel" autocomplete="tel" />
+      <input id={`phone-${compact ? "compact" : "full"}`} name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="40" />
       <span class="field__error" data-error-for="phone"></span>
     </div>
   </div>
@@ -49,29 +52,20 @@ const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL ?? "";
   </div>
 
   {
-    turnstileSiteKey && (
-      <div class="cf-turnstile" data-sitekey={turnstileSiteKey}></div>
+    enabled && (
+      <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-action="contact" data-language="pl" data-theme="dark" data-size="flexible"></div>
     )
   }
   {
-    turnstileSiteKey && (
+    enabled && (
       <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     )
   }
 
-  <div class="form-consent">
-    <label>
-      <input name="privacy" type="checkbox" required />
-      <span>
-        Potwierdzam zapoznanie się z <a href="/polityka-prywatnosci">polityką prywatności</a>.
-        <span aria-hidden="true">*</span>
-      </span>
-    </label>
-    <span class="field__error" data-error-for="privacy"></span>
-  </div>
+  <div class="form-consent form-information"><p>Dane wykorzystamy, aby odpowiedzieć na Twoje zapytanie. Informacje o administratorze, podstawach przetwarzania i Twoich prawach znajdziesz w <a href="/polityka-prywatnosci">polityce prywatności</a>. Zasady działania formularza określa <a href="/regulamin">regulamin</a>. Wysłanie zapytania nie oznacza zakupu pakietu ani zapisu na marketing.</p></div>
 
   <div class="form-submit">
-    <button class="button button--primary" type="submit">
+    <button class="button button--primary" type="submit" disabled={!enabled}>
       <span data-submit-label>Wyślij zapytanie</span>
       <span aria-hidden="true" data-submit-icon>↗</span>
     </button>
@@ -81,111 +75,6 @@ const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL ?? "";
 </form>
 
 <script>
-  const forms = document.querySelectorAll<HTMLFormElement>("[data-contact-form]");
-
-  const errorMessages: Record<string, string> = {
-    name: "Wpisz imię i nazwisko.",
-    company: "Wpisz nazwę firmy.",
-    email: "Podaj poprawny adres e-mail.",
-    privacy: "Potwierdź zapoznanie się z polityką prywatności.",
-  };
-
-  const validateField = (form: HTMLFormElement, field: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) => {
-    const isValid = field.checkValidity();
-
-    const error = form.querySelector<HTMLElement>(`[data-error-for="${field.name}"]`);
-    field.setAttribute("aria-invalid", String(!isValid));
-    if (error) error.textContent = isValid ? "" : (errorMessages[field.name] ?? "Sprawdź to pole.");
-    return isValid;
-  };
-
-  forms.forEach((form) => {
-    form.noValidate = true;
-    const fields = Array.from(
-      form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
-        "input:not([name='companyUrl']), select, textarea"
-      )
-    );
-
-    fields.forEach((field) => {
-      const error = form.querySelector<HTMLElement>(`[data-error-for="${field.name}"]`);
-      if (error) { error.id = `${field.id || field.name}-error`; field.setAttribute("aria-describedby", error.id); }
-      field.addEventListener("blur", () => {
-        if (field.required || field.value) validateField(form, field);
-      });
-      field.addEventListener("input", () => {
-        if (field.getAttribute("aria-invalid") === "true") validateField(form, field);
-      });
-    });
-
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      const status = form.querySelector<HTMLElement>("[data-form-status]");
-      const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]');
-      const label = form.querySelector<HTMLElement>("[data-submit-label]");
-      const icon = form.querySelector<HTMLElement>("[data-submit-icon]");
-      const invalidFields = fields.filter((field) => !validateField(form, field));
-      const firstInvalid = invalidFields[0];
-
-      if (firstInvalid) {
-        firstInvalid.focus();
-        if (status) {
-          status.hidden = false;
-          status.dataset.state = "error";
-          status.textContent = "Sprawdź oznaczone pola i spróbuj ponownie.";
-        }
-        return;
-      }
-
-      const endpoint = form.dataset.endpoint;
-      if (!endpoint) {
-        if (status) {
-          status.hidden = false;
-          status.dataset.state = "notice";
-          status.innerHTML =
-            "<strong>Wysyłka nie jest jeszcze dostępna.</strong> Twoja wiadomość nie została wysłana. Wpisane dane pozostają w formularzu.";
-          status.focus();
-        }
-        return;
-      }
-
-      if (!submit || !label || !icon) return;
-      submit.disabled = true;
-      label.textContent = "Wysyłanie…";
-      icon.textContent = "•••";
-      if (status) status.hidden = true;
-
-      try {
-        const payload = Object.fromEntries(new FormData(form).entries());
-        const response = await fetch(endpoint, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-          signal: AbortSignal.timeout(15000),
-        });
-
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        form.reset();
-        if (status) {
-          status.hidden = false;
-          status.dataset.state = "success";
-          status.innerHTML =
-            "<strong>Dziękuję — zapytanie zostało wysłane.</strong> Odpowiem w ciągu 1 dnia roboczego.";
-          status.focus();
-        }
-      } catch {
-        if (status) {
-          status.hidden = false;
-          status.dataset.state = "error";
-          status.innerHTML =
-            "<strong>Nie udało się potwierdzić wysyłki.</strong> Wpisana treść pozostała w formularzu. Spróbuj ponownie za chwilę.";
-          status.focus();
-        }
-      } finally {
-        submit.disabled = false;
-        label.textContent = "Wyślij zapytanie";
-        icon.textContent = "↗";
-      }
-    });
-  });
+  import { initContactForms } from "../scripts/contact";
+  initContactForms();
 </script>

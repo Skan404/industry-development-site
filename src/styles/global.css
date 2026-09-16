@@ -2853,3 +2853,10 @@ article[id] {
 .type-once { display: grid; }
 .type-once > span { grid-area: 1 / 1; min-width: 0; }
 .type-once-reserve { visibility: hidden; pointer-events: none; }
+.form-information { font-size: 12px; line-height: 1.8; color: var(--muted); }
+.form-information a, .legal-content a { text-decoration: underline; text-underline-offset: 3px; }
+.legal-content h2 { margin-top: 2.4rem; margin-bottom: 1rem; font-size: clamp(22px, 3vw, 30px); }
+.legal-content p { margin-block: 1rem; line-height: 1.9; color: var(--muted); }
+.legal-content { max-width: 840px; }
+.footer-bottom { flex-wrap: wrap; }
+@media print { .effect, .site-header, .site-footer, .type-pause { display: none !important; } .reveal-pending { opacity: 1 !important; } body { background: white; color: black; } .legal-content p { color: black; } }

@@ -1,0 +1,44 @@
+# Hostido / LiteSpeed (Apache-compatible). HTTPS to origin is required.
+Options -Indexes -MultiViews
+DirectoryIndex index.html
+DirectorySlash Off
+ErrorDocument 404 /404.html
+
+RewriteEngine On
+RewriteRule (^|/)\.(?!well-known/) - [F,L]
+RewriteRule ^(?:inddev-private|server|config|node_modules|vendor|tests)(?:/|$) - [F,L,NC]
+RewriteRule \.(?:env|ini|log|sql|bak|lock)$ - [F,L,NC]
+
+RewriteCond %{HTTP_HOST} !^www\.inddev\.pl$ [NC,OR]
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://www.inddev.pl%{REQUEST_URI} [R=301,L,NE]
+
+RewriteRule ^oferta/?$ /uslugi [R=301,L]
+RewriteRule ^o-studiu/?$ /#wspolpraca [R=301,L,NE]
+
+# Canonical URLs without /index.html or trailing slash; never redirect POSTs.
+RewriteCond %{REQUEST_METHOD} ^(?:GET|HEAD)$
+RewriteCond %{THE_REQUEST} \s/+(.*/)?index\.html[?\s] [NC]
+RewriteRule ^(.*?/)?index\.html$ /$1 [R=301,L,NE]
+RewriteCond %{REQUEST_METHOD} ^(?:GET|HEAD)$
+RewriteRule ^(.+)/$ /$1 [R=301,L,NE]
+
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
+RewriteRule ^(.+)$ $1/index.html [L]
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "DENY"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  # CSP is appended by the packaging script using hashes from this exact build.
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+  <FilesMatch "\.php$">
+    Header always set Cache-Control "no-store, private"
+    Header always set X-Robots-Tag "noindex, nofollow"
+  </FilesMatch>
+</IfModule>

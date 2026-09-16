@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import LegalIdentity from "../components/LegalIdentity.astro";
+import { siteConfig } from "../data/site";
+---
+<BaseLayout title="Regulamin serwisu i formularza kontaktowego" description="Zasady korzystania z serwisu IndDev, wysyłania zapytań i zgłaszania problemów z formularzem." noindex>
+  <section class="subpage-hero container"><p class="eyebrow">Zasady korzystania</p><h1>Jasne zasady.<br /><em>Dobry początek.</em></h1><p>Regulamin serwisu i formularza kontaktowego.<br />Wersja z {siteConfig.privacyUpdatedAt}</p></section>
+  <article class="container container--narrow legal-content section">
+    <h2>1. Usługodawca i kontakt</h2><LegalIdentity />
+    <p>Industry Development (IndDev) jest marką, pod którą prezentowana jest oferta projektowania i utrzymania stron internetowych. Serwis jest dostępny pod adresem www.inddev.pl.</p>
+    <h2>2. Zakres bezpłatnych usług</h2>
+    <p>Serwis umożliwia zapoznanie się z ofertą i przesłanie danych kontaktowych w celu otrzymania odpowiedzi na zapytanie. Korzystanie ze strony i formularza jest bezpłatne, z wyjątkiem kosztu dostępu do internetu ponoszonego u własnego operatora. Serwis nie wymaga założenia konta.</p>
+    <h2>3. Wymagania i zasady korzystania</h2>
+    <p>Potrzebne są dostęp do internetu i aktualna przeglądarka obsługująca HTTPS. Formularz wymaga JavaScript oraz działania zabezpieczenia Cloudflare Turnstile. Jeśli formularz nie jest dostępny, można skontaktować się przez e-mail: <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>.</p>
+    <p>Należy podawać prawdziwe dane kontaktowe i korzystać z formularza zgodnie z prawem. Zabronione są treści bezprawne, spam, podszywanie się pod inne osoby oraz działania zakłócające bezpieczeństwo lub dostępność serwisu. Nie należy przekazywać danych szczególnie chronionych ani haseł.</p>
+    <h2>4. Przesłanie zapytania</h2>
+    <p>Formularz wymaga imienia i nazwiska, nazwy firmy oraz adresu e-mail. Telefon jest opcjonalny. Przed wysłaniem można poprawić dane lub zrezygnować, zamykając stronę. Usługa formularza rozpoczyna się z chwilą wysłania zgłoszenia i kończy jego obsługą techniczną; dalsza korespondencja służy odpowiedzi na zapytanie.</p>
+    <p>Komunikat sukcesu potwierdza przyjęcie wiadomości przez serwer pocztowy. Nie jest gwarancją przeczytania wiadomości ani zawarciem umowy na wykonanie strony. W razie błędu lub braku odpowiedzi prosimy o kontakt e-mail. Standardowo odpowiadamy na nowe zapytania w ciągu jednego dnia roboczego.</p>
+    <h2>5. Oferta i umowa na wykonanie strony</h2>
+    <p>Pakiety są skierowane do firm. Kwoty prezentowane w serwisie są cenami netto. Wysłanie formularza lub wybranie pakietu nie powoduje zamówienia ani obowiązku zapłaty. Płatna współpraca rozpoczyna się dopiero po odrębnym uzgodnieniu zakresu i zawarciu umowy.</p>
+    <p>Model abonamentowy zakłada minimum 24 miesiące współpracy i 0 zł opłaty wdrożeniowej. Domena i zewnętrzne usługi potrzebne do realizacji uzgodnionego pakietu są objęte abonamentem. Szczegóły zakresu, wynagrodzenia, terminów, praw do strony, rezygnacji i dalszej opieki określa indywidualna umowa przekazywana przed jej zawarciem. Ten regulamin jej nie zastępuje.</p>
+    <h2>6. Reklamacje dotyczące serwisu</h2>
+    <p>Problemy techniczne i reklamacje można zgłaszać na <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>. Prosimy o opis problemu, datę jego wystąpienia i adres do odpowiedzi; nie trzeba podawać danych wykraczających poza to, co potrzebne do wyjaśnienia sprawy. Odpowiadamy w ciągu 14 dni od otrzymania reklamacji.</p>
+    <h2>7. Dane osobowe i prawa do materiałów</h2>
+    <p>Przetwarzanie danych opisuje <a href="/polityka-prywatnosci">polityka prywatności</a>. Materiały serwisu podlegają ochronie zgodnie z właściwymi przepisami i licencjami. Regulamin nie ogranicza dozwolonego użytku ani praw wynikających z bezwzględnie obowiązujących przepisów.</p>
+    <h2>8. Zmiany regulaminu</h2>
+    <p>Aktualna wersja regulaminu jest dostępna na tej stronie i może zostać zapisana lub wydrukowana za pomocą przeglądarki. Zmiany wynikające z rozwoju funkcji lub przepisów stosuje się do korzystania z serwisu po ich opublikowaniu; nie zmieniają zawartych wcześniej umów na wykonanie strony.</p>
+  </article>
+</BaseLayout>
