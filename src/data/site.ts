@@ -43,11 +43,12 @@ export const packages: readonly Package[] = [
     name: "Start",
     price: 199,
     description:
-      "Twoja strona i firmowa poczta. Wszystko, czego potrzebujesz na początek.",
+      "Twoja strona, firmowa poczta i wizytówka Google. Solidny początek obecności w sieci.",
     features: [
       "Strona, hosting, SSL, formularz i utrzymanie",
       "Firmowa poczta we własnej domenie",
       "Link do opinii, kod QR i projekt karty",
+      "Założenie lub uporządkowanie Profilu Firmy w Google",
       "Nowe realizacje w ramach czasu zmian",
     ],
     changes: "15 minut drobnych zmian miesięcznie",
@@ -56,11 +57,11 @@ export const packages: readonly Package[] = [
   {
     id: "rozwoj",
     name: "Rozwój",
-    price: 499,
-    badge: "Strona + obecność lokalna",
+    price: 399,
+    badge: "Strona + Google + rezerwacje",
     highlighted: true,
     description:
-      "Wszystko ze Startu oraz regularna opieka nad Twoją obecnością w Google.",
+      "Wszystko ze Startu, regularna opieka Google oraz formularze do umawiania spotkań.",
     features: [
       "Strona, hosting, SSL, formularz i utrzymanie",
       "Firmowa poczta we własnej domenie",
@@ -68,6 +69,7 @@ export const packages: readonly Package[] = [
       "Założenie lub uporządkowanie profilu Google",
       "Kontrola profilu raz w miesiącu + zgłoszone zmiany",
       "2 publikacje / mies. i odpowiedzi na wszystkie opinie",
+      "Formularze interaktywne: rezerwacje i powiadomienia SMS",
       "Nowe realizacje w ramach czasu zmian",
     ],
     changes: "30 minut drobnych zmian miesięcznie",
@@ -78,14 +80,16 @@ export const packages: readonly Package[] = [
     name: "Premium",
     price: 799,
     description:
-      "Rozbudowana opieka Google oraz narzędzia do obsługi zapytań i rezerwacji.",
+      "Rozbudowana opieka Google, formularze interaktywne i telefoniczna sekretarka AI.",
     features: [
       "Strona, hosting, SSL, formularz i utrzymanie",
       "Firmowa poczta we własnej domenie",
       "Link do opinii, kod QR i projekt karty",
       "4 publikacje / mies. i odpowiedzi na wszystkie opinie",
       "Założenie lub uporządkowanie profilu Google i stała opieka",
-      "Rezerwacje lub rozbudowany formularz wyceny",
+      "Formularze interaktywne: rezerwacje i powiadomienia SMS",
+      "Rozbudowany formularz wyceny",
+      "Sekretarka AI: odbieranie połączeń i obsługa zapytań",
       "1 scenariusz automatycznego porządkowania zapytań",
       "1 nowa realizacja miesięcznie poza limitem zmian",
     ],
@@ -105,7 +109,7 @@ export const packageComparison: readonly {
   { label: "Firmowa poczta we własnej domenie", values: ["✓", "✓", "✓"] },
   {
     label: "Założenie lub uporządkowanie Profilu Firmy w Google",
-    values: ["—", "✓", "✓"],
+    values: ["✓", "✓", "✓"],
   },
   {
     label: "Aktualizacja godzin, usług i danych wizytówki",
@@ -128,8 +132,16 @@ export const packageComparison: readonly {
     values: ["Link, kod QR i projekt karty do wydruku", "Jak w Starcie", "Jak w Starcie"],
   },
   {
-    label: "Rezerwacje lub rozbudowany formularz wyceny",
+    label: "Formularze interaktywne: rezerwacje i powiadomienia SMS",
+    values: ["—", "✓", "✓"],
+  },
+  {
+    label: "Rozbudowany formularz wyceny",
     values: ["—", "—", "Jeden wybrany moduł"],
+  },
+  {
+    label: "Sekretarka AI do obsługi telefonicznych zapytań",
+    values: ["—", "—", "✓"],
   },
   {
     label: "Automatyczne porządkowanie zapytań",
@@ -157,8 +169,11 @@ export const packageComparison: readonly {
   },
 ];
 
+export const usageBillingNote =
+  "Koszt wysyłki SMS i zużycie sekretarki AI są płatne dodatkowo, według stawek określonych w umowie.";
+
 export const pricingNote =
-  "Ceny netto dla firm. Po 24 miesiącach klient może kontynuować opiekę albo przejąć witrynę na zasadach określonych w umowie. Szczegółowy zakres potwierdzamy przed rozpoczęciem.";
+  `Ceny netto dla firm. ${usageBillingNote} Po 24 miesiącach klient może kontynuować opiekę albo przejąć witrynę na zasadach określonych w umowie. Szczegółowy zakres potwierdzamy przed rozpoczęciem.`;
 
 // UWAGA PRAWNA: finalne warunki pakietów, przeniesienia witryny i rezygnacji
 // wymagają zatwierdzenia po przygotowaniu właściwej umowy B2B.
@@ -167,7 +182,12 @@ export const faqs = [
   {
     question: "Czy naprawdę nie ma opłaty za wdrożenie?",
     answer:
-      "Tak. W modelu abonamentowym opłata wdrożeniowa wynosi 0 zł przy umowie B2B na minimum 24 miesiące. Koszt domeny i usług zewnętrznych potrzebnych do realizacji zakresu pakietu jest wliczony w abonament.",
+      `Tak. W modelu abonamentowym opłata wdrożeniowa wynosi 0 zł przy umowie B2B na minimum 24 miesiące. ${usageBillingNote} Domena i pozostałe usługi zewnętrzne potrzebne do realizacji uzgodnionego pakietu są wliczone w abonament.`,
+  },
+  {
+    question: "Jak rozliczane są SMS-y i sekretarka AI?",
+    answer:
+      "Wdrożenie formularzy interaktywnych jest objęte pakietami Rozwój i Premium, a sekretarki AI — pakietem Premium. SMS-y rozliczamy dodatkowo według liczby wysłanych wiadomości, a sekretarkę AI według faktycznego zużycia. Stawki i zasady rozliczenia potwierdzamy w umowie przed uruchomieniem.",
   },
   {
     question: "Dlaczego okres minimalny wynosi 24 miesiące?",

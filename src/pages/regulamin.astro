@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import LegalIdentity from "../components/LegalIdentity.astro";
-import { siteConfig } from "../data/site";
+import { siteConfig, usageBillingNote } from "../data/site";
 ---
 <BaseLayout title="Regulamin serwisu i formularza kontaktowego" description="Zasady korzystania z serwisu IndDev, wysyłania zapytań i zgłaszania problemów z formularzem." noindex>
   <section class="subpage-hero container"><p class="eyebrow">Zasady korzystania</p><h1>Jasne zasady.<br /><em>Dobry początek.</em></h1><p>Regulamin serwisu i formularza kontaktowego.<br />Wersja z {siteConfig.privacyUpdatedAt}</p></section>
@@ -20,7 +20,7 @@ import { siteConfig } from "../data/site";
     <p>W razie utraty połączenia spotkanie mogło zostać zapisane. Należy ponowić potwierdzenie tego samego terminu bez zmiany danych lub skontaktować się z nami przed wyborem kolejnego terminu. Zmianę lub anulowanie zgłasza się na kontakt@inddev.pl. Niedostępność kalendarza lub zabezpieczeń może uniemożliwić rezerwację. Rezerwacja rozmowy nie jest zamówieniem płatnej usługi.</p>
     <h2>5. Oferta i umowa na wykonanie strony</h2>
     <p>Pakiety są skierowane do firm. Kwoty prezentowane w serwisie są cenami netto. Wysłanie formularza lub wybranie pakietu nie powoduje zamówienia ani obowiązku zapłaty. Płatna współpraca rozpoczyna się dopiero po odrębnym uzgodnieniu zakresu i zawarciu umowy.</p>
-    <p>Model abonamentowy zakłada minimum 24 miesiące współpracy i 0 zł opłaty wdrożeniowej. Domena i zewnętrzne usługi potrzebne do realizacji uzgodnionego pakietu są objęte abonamentem. Szczegóły zakresu, wynagrodzenia, terminów, praw do strony, rezygnacji i dalszej opieki określa indywidualna umowa przekazywana przed jej zawarciem. Ten regulamin jej nie zastępuje.</p>
+    <p>Model abonamentowy zakłada minimum 24 miesiące współpracy i 0 zł opłaty wdrożeniowej. {usageBillingNote} Domena i pozostałe usługi zewnętrzne potrzebne do realizacji uzgodnionego pakietu są objęte abonamentem. Szczegóły zakresu, wynagrodzenia, terminów, praw do strony, rezygnacji i dalszej opieki określa indywidualna umowa przekazywana przed jej zawarciem. Ten regulamin jej nie zastępuje.</p>
     <h2>6. Reklamacje dotyczące serwisu</h2>
     <p>Problemy techniczne i reklamacje można zgłaszać na <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>. Prosimy o opis problemu, datę jego wystąpienia i adres do odpowiedzi; nie trzeba podawać danych wykraczających poza to, co potrzebne do wyjaśnienia sprawy. Odpowiadamy w ciągu 14 dni od otrzymania reklamacji.</p>
     <h2>7. Dane osobowe i prawa do materiałów</h2>
