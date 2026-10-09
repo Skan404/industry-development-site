@@ -188,3 +188,12 @@ test('SMS API handles provider rejection, denied recipient and ambiguous network
   assert.equal(await sendBookingSms(env, data, async () => { throw new Error('timeout'); }), 'unknown');
   assert.equal(await sendBookingSms({}, data), 'unconfigured');
 });
+
+test('Google transport preserves the runtime global receiver for OAuth and Calendar requests', async () => {
+  const calendar = new GoogleCalendar(configuredEnv, async function (url) {
+    assert.equal(this, globalThis);
+    if (url.includes('oauth2')) return Response.json({ access_token: 'test-only', expires_in: 3600 });
+    return Response.json({ calendars: { 'calendar@example.com': { busy: [] } } });
+  });
+  assert.deepEqual(await calendar.busy('2026-10-12T08:00:00Z', '2026-10-12T08:30:00Z'), []);
+});

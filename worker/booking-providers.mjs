@@ -9,7 +9,7 @@ export function smsConfigured(env) {
   return Boolean(env.ZADARMA_API_KEY && env.ZADARMA_API_SECRET && /^\+?[1-9]\d{7,14}$/.test(env.BOOKING_SMS_TO || ''));
 }
 export class GoogleCalendar {
-  constructor(env, providerFetch = fetch) { this.env = env; this.fetch = providerFetch; this.token = null; this.expires = 0; }
+  constructor(env, providerFetch = fetch) { this.env = env; this.fetch = providerFetch.bind(globalThis); this.token = null; this.expires = 0; }
   async accessToken() {
     if (this.token && this.expires > Date.now()) return this.token;
     const response = await this.fetch('https://oauth2.googleapis.com/token', {

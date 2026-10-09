@@ -23,3 +23,11 @@ Nie potwierdzono zdarzenia w docelowym kalendarzu, przyjęcia SMS przez Zadarma 
 ElevenLabs i numer recepcjonistki nie zostały zmienione. Agent wymaga osobnej integracji, aby korzystać z tych samych blokad.
 
 Zachowano wcześniejszą zmianę użytkownika w src/styles/global.css.
+
+## Pierwszy odbiór produkcyjny i korekta
+
+- Commit 11ac800 wysłano do GitHub master po zatwierdzeniu przez Szymona. Ręczny build w panelu Cloudflare udostępnił /umow-spotkanie (HTTP 200).
+- Dostępność niedzieli: HTTP 200 i pusta lista; nieprawidłowa data: HTTP 422. Dzień roboczy zwracał ogólny HTTP 503.
+- Błąd odtworzono w rzeczywistym lokalnym runtime Cloudflare: wywołanie natywnego fetch jako metody klienta Google gubiło poprawny odbiornik i zgłaszało Illegal invocation. Testy z atrapami tego nie wykryły.
+- Korekta wiąże transport z globalThis. Natywny transport GoogleCalendar w lokalnym workerd pobiera teraz odpowiedź HTTP 200 z lokalnego serwera testowego.
+- Po korekcie: npm test 36/36, lint kodu IndDev zaliczony. Rzeczywiste wydarzenie i doręczenie SMS nadal wymagają odbioru po wdrożeniu poprawki.
