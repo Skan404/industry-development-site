@@ -9,7 +9,7 @@ export const siteConfig = {
   calendarUrl: "",
   nip: business.nip,
   address: `${business.street}, ${business.postalCode} ${business.city}`,
-  privacyUpdatedAt: "16 września 2026 r.",
+  privacyUpdatedAt: "9 października 2026 r.",
   location: "Płońsk, województwo mazowieckie",
   serviceArea: "Płońsk i okolice oraz zdalnie cała Polska",
   defaultDescription:
@@ -212,6 +212,7 @@ export const faqs = [
 ] as const;
 
 export const routes = [
+  "/umow-spotkanie",
   "/realizacje",
   "/",
   "/uslugi",

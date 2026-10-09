@@ -5,7 +5,7 @@ import { navigation, siteConfig } from "../data/site";
   <div class="container footer-top">
     <a href="/" class="footer-wordmark">industry development<span>.</span></a>
     <p>Dobry projekt. Solidne wykonanie.<br />Spokojna głowa.</p>
-    <nav aria-label="Nawigacja w stopce">{navigation.map(item => <a href={item.href}>{item.label}</a>)}</nav>
+    <nav aria-label="Nawigacja w stopce">{navigation.map(item => <a href={item.href}>{item.label}</a>)}<a href="/umow-spotkanie">Umów spotkanie</a></nav>
   </div>
   <div class="container footer-bottom">
     <span>© {new Date().getFullYear()} {siteConfig.legalName}</span>

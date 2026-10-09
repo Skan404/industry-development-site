@@ -13,7 +13,7 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
       <span class="nav-blob" aria-hidden="true"></span>
       {navigation.map(item => <a href={item.href} aria-current={path === item.href || (path === "/oferta" && item.href === "/uslugi") ? "page" : undefined}>{item.label}</a>)}
     </div>
-    <a class="button button--small button--primary nav-cta" href="/kontakt#formularz">Porozmawiajmy <span aria-hidden="true">↗</span></a>
+    <a class="button button--small button--primary nav-cta" href="/umow-spotkanie">Umów spotkanie <span aria-hidden="true">↗</span></a>
   </nav>
 </header>
 <script>

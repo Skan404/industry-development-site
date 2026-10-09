@@ -8,6 +8,10 @@ Poniższa dokumentacja Hostido i katalog server/ zachowują poprzedni wariant. N
 
 Strona Astro dla https://www.inddev.pl. Główna, Usługi, Realizacje, Kontakt, Polityka prywatności i Regulamin. Hosting docelowy: Hostido + Cloudflare. Na tym etapie brak publikacji i konfiguracji kont.
 
+## Rezerwacje spotkań
+
+Podstrona `/umow-spotkanie`: 30 minut, pon.–pt. 10:00–20:00 czasu polskiego. Backend Cloudflare zapisuje wydarzenie Google Calendar i powiadomienie SMS Zadarma. Wymaga konfiguracji sekretów i odbioru produkcyjnego; instrukcja: [docs/REZERWACJE.md](docs/REZERWACJE.md).
+
 ## Lokalnie
 
 Node.js 22.12+; npm ci, następnie npm run dev. Podgląd: http://127.0.0.1:4321.

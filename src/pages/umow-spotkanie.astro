@@ -1,0 +1,72 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteConfig } from "../data/site";
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
+---
+<BaseLayout title="Umów spotkanie" description="Wybierz termin 30-minutowej rozmowy o Twojej stronie. Spotkania od poniedziałku do piątku, 10:00–20:00 czasu polskiego.">
+  <section class="subpage-hero container">
+    <p class="eyebrow"><i></i> Umów spotkanie / Poznajmy się</p>
+    <h1>Znajdź chwilę.<br /><em>Porozmawiajmy.</em></h1>
+    <p>Wybierz dogodny termin i opowiedz nam o swojej firmie.<br />Pierwsza rozmowa jest bezpłatna i niezobowiązująca.</p>
+  </section>
+  <section class="container contact-page-grid booking-layout" aria-labelledby="booking-title">
+    <aside class="contact-details">
+      <p class="eyebrow">30 minut na Twój pomysł</p>
+      <h2>Dobry kierunek<br /><em>zaczyna się od rozmowy.</em></h2>
+      <p>Porozmawiamy o tym, czego potrzebuje Twoja firma, i ustalimy kolejny krok.</p>
+      <div class="contact-details__list">
+        <div class="contact-details__row"><span>Kiedy?</span><strong>Poniedziałek–piątek · 10:00–20:00</strong></div>
+        <div class="contact-details__row"><span>Czas spotkania</span><strong>30 minut · ostatni start o 19:30</strong></div>
+        <div class="contact-details__row"><span>Strefa czasowa</span><strong>Czas polski · Europe/Warsaw</strong></div>
+      </div>
+      <p>Chcesz zmienić lub odwołać termin? Napisz na <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>.</p>
+    </aside>
+    <div class="form-card glow-card">
+      <div class="form-heading"><h2 id="booking-title">Twój termin. Twój pierwszy krok.</h2><p>Wybierz datę, godzinę i zostaw dane kontaktowe.</p></div>
+      <form data-booking-form data-enabled={Boolean(siteKey)} class="contact-form" method="post" action="/api/booking">
+        <noscript><p class="form-notice">Do rezerwacji potrzebny jest JavaScript. <a href={`mailto:${siteConfig.email}`}>Napisz do nas e-mail.</a></p><style>.booking-controls,.booking-submit{display:none!important}</style></noscript>
+        <fieldset class="booking-controls">
+          <legend class="booking-step"><span>01</span> Wybierz termin</legend>
+          <div class="field"><label for="booking-date">Data spotkania <span aria-hidden="true">*</span></label><input id="booking-date" name="date" type="date" required aria-describedby="booking-date-help" /><p id="booking-date-help" class="booking-help">Możesz wybrać termin w ciągu najbliższych 60 dni.</p></div>
+          <p class="booking-slots-message" data-slots-status role="status" aria-live="polite">Wczytywanie wolnych godzin…</p>
+          <fieldset class="booking-times"><legend>Dostępne godziny <span aria-hidden="true">*</span></legend><div class="booking-slots" data-booking-slots></div></fieldset>
+        </fieldset>
+        <fieldset class="booking-controls">
+          <legend class="booking-step"><span>02</span> Zostaw kontakt</legend>
+          <div class="form-grid">
+            <div class="field"><label for="booking-name">Imię i nazwisko <span aria-hidden="true">*</span></label><input id="booking-name" name="name" autocomplete="name" maxlength="100" required /></div>
+            <div class="field"><label for="booking-company">Nazwa firmy <span aria-hidden="true">*</span></label><input id="booking-company" name="company" autocomplete="organization" maxlength="160" required /></div>
+            <div class="field"><label for="booking-email">E-mail <span aria-hidden="true">*</span></label><input id="booking-email" name="email" type="email" autocomplete="email" maxlength="254" required /></div>
+            <div class="field"><label for="booking-phone">Telefon <span>(opcjonalnie)</span></label><input id="booking-phone" name="phone" type="tel" autocomplete="tel" maxlength="40" pattern="[+0-9 ()\.\-]{6,40}" /></div>
+          </div>
+        </fieldset>
+        <div class="field field--honeypot" aria-hidden="true"><label for="booking-company-url">Adres firmy</label><input id="booking-company-url" name="companyUrl" tabindex="-1" autocomplete="off" /></div>
+        {siteKey && <><div class="cf-turnstile" data-sitekey={siteKey} data-action="booking" data-language="pl" data-theme="dark" data-size="flexible"></div><script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script></>}
+        <div class="form-consent form-information"><p>Dane wykorzystamy do obsługi spotkania. Szczegóły znajdziesz w <a href="/polityka-prywatnosci">polityce prywatności</a> i <a href="/regulamin">regulaminie</a>. Rezerwacja nie oznacza zakupu ani zapisu na marketing.</p></div>
+        <div class="form-submit booking-submit"><button class="button button--primary" type="submit" disabled><span data-booking-submit-label>Umów spotkanie</span><span aria-hidden="true">↗</span></button><p>Termin jest zarezerwowany dopiero po potwierdzeniu.</p></div>
+        <div class="form-status" data-booking-status role="status" aria-live="polite" tabindex="-1" hidden></div>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .booking-layout { padding-bottom: 100px; }
+  fieldset { min-width: 0; padding: 0; border: 0; margin: 0 0 28px; }
+  .booking-step { font-size: 16px; margin-bottom: 20px; font-weight: 600; }
+  .booking-step span { margin-right: 10px; color: var(--accent, #a2eccb); font-size: 12px; }
+  .booking-help, .booking-slots-message { color: var(--muted); font-size: 13px; line-height: 1.6; }
+  .booking-times legend { font-size: 13px; margin: 8px 0 12px; }
+  .booking-slots { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .booking-slots :global(label) { position: relative; cursor: pointer; }
+  .booking-slots :global(input) { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; }
+  .booking-slots :global(span) { display: block; padding: 12px 4px; border: 1px solid rgba(162,236,203,.2); border-radius: 8px; text-align: center; font-size: 14px; background: rgba(162,236,203,.03); }
+  .booking-slots :global(input:checked + span) { background: #a2eccb; border-color: #a2eccb; color: #0a100e; font-weight: 600; }
+  .booking-slots :global(input:focus-visible + span) { outline: 2px solid #a2eccb; outline-offset: 3px; }
+  .booking-slots :global(input:disabled + span) { opacity: .4; cursor: default; }
+  .field input[type="date"] { min-width: 0; width: 100%; color-scheme: dark; }
+  @media (max-width: 420px) { .booking-slots { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+</style>
+<script>
+  import { initBookingForm } from "../scripts/booking";
+  initBookingForm();
+</script>

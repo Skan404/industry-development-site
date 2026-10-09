@@ -1,1 +1,13 @@
+# Local Worker secrets only. Copy to ignored .dev.vars; never commit actual values.
 TURNSTILE_SECRET=
+GOOGLE_CALENDAR_ID=
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GOOGLE_REFRESH_TOKEN=
+ZADARMA_API_KEY=
+ZADARMA_API_SECRET=
+BOOKING_SMS_TO=
+# Optional; only a sender allowed by Zadarma.
+ZADARMA_SMS_SENDER=
+# Optional additional calendar IDs, comma-separated.
+BOOKING_BUSY_CALENDAR_IDS=

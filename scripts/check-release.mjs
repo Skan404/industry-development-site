@@ -7,7 +7,7 @@ const production = process.argv.includes('--production');
 const errors = [];
 const blockers = [];
 const check = (condition, text) => { if (!condition) errors.push(text); };
-const pages = ['index.html', 'uslugi/index.html', 'kontakt/index.html', 'realizacje/index.html', 'polityka-prywatnosci/index.html', 'regulamin/index.html', '404.html'];
+const pages = ['index.html', 'uslugi/index.html', 'kontakt/index.html', 'umow-spotkanie/index.html', 'realizacje/index.html', 'polityka-prywatnosci/index.html', 'regulamin/index.html', '404.html'];
 for (const page of pages) {
   const html = await fs.readFile(path.join('dist', page), 'utf8');
   check(/<title>[^<]+<\/title>/.test(html), `${page}: missing title`);
