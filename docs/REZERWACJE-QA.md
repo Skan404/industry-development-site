@@ -1,8 +1,8 @@
-# Rezerwacje — kontrola lokalna 9.10.2026
+# Rezerwacje — kontrola i odbiór produkcyjny 9.10.2026
 
-Status: przygotowane i przetestowane lokalnie. Szymon potwierdził zapisanie czterech sekretów Google i trzech sekretów Zadarma w Cloudflare oraz dostępność formularza SMS w Zadarma. Nie sprawdzono jeszcze poprawności sekretów ani połączeń z dostawcami. Nie opublikowano kodu rezerwacji i nie wykonano prawdziwej rezerwacji ani wysyłki SMS.
+Status: wdrożone na produkcji. Po publikacji poprawki e110f66 potwierdzono odczyt dostępności przez Google Calendar. Szymon potwierdził sukces formularza, zapis wydarzenia w docelowym kalendarzu i doręczenie SMS po doładowaniu konta Zadarma. Rezerwacje przez stronę przeszły odbiór; agent ElevenLabs nadal wymaga osobnej integracji.
 
-## Wyniki
+## Wyniki lokalne przed publikacją
 
 - npm test: 35/35 zaliczonych, w tym 16 testów nowego backendu.
 - Końcowy ponowny test tests/booking.test.mjs po zmianie weryfikacji Turnstile: 16/16.
@@ -16,9 +16,9 @@ Status: przygotowane i przetestowane lokalnie. Szymon potwierdził zapisanie czt
 
 ## Ograniczenia
 
-Wrangler zgłaszał problem certyfikatu podczas pobierania opcjonalnego Request.cf. Lokalny serwer i test SQLite działały; nie wyłączano kontroli TLS. Nie potwierdzono zewnętrznych połączeń ani autoryzacji dostawców.
+Wrangler zgłaszał problem certyfikatu podczas pobierania opcjonalnego Request.cf. Lokalny serwer i test SQLite działały; nie wyłączano kontroli TLS. W kontroli lokalnej nie używano prawdziwych kont dostawców; odbiór produkcyjny opisano poniżej.
 
-Nie potwierdzono zdarzenia w docelowym kalendarzu, przyjęcia SMS przez Zadarma ani jego doręczenia. Odbiór produkcyjny i konfiguracja: REZERWACJE.md.
+Równoczesne rezerwacje i awarie dostawców sprawdzono lokalnie z atrapami, a nie na produkcji. Konfiguracja i procedura odbioru: REZERWACJE.md.
 
 ElevenLabs i numer recepcjonistki nie zostały zmienione. Agent wymaga osobnej integracji, aby korzystać z tych samych blokad.
 
@@ -30,4 +30,13 @@ Zachowano wcześniejszą zmianę użytkownika w src/styles/global.css.
 - Dostępność niedzieli: HTTP 200 i pusta lista; nieprawidłowa data: HTTP 422. Dzień roboczy zwracał ogólny HTTP 503.
 - Błąd odtworzono w rzeczywistym lokalnym runtime Cloudflare: wywołanie natywnego fetch jako metody klienta Google gubiło poprawny odbiornik i zgłaszało Illegal invocation. Testy z atrapami tego nie wykryły.
 - Korekta wiąże transport z globalThis. Natywny transport GoogleCalendar w lokalnym workerd pobiera teraz odpowiedź HTTP 200 z lokalnego serwera testowego.
-- Po korekcie: npm test 36/36, lint kodu IndDev zaliczony. Rzeczywiste wydarzenie i doręczenie SMS nadal wymagają odbioru po wdrożeniu poprawki.
+- Po korekcie: npm test 36/36, lint kodu IndDev zaliczony. Wynik późniejszego odbioru rzeczywistego wydarzenia i SMS opisano poniżej.
+
+## Końcowy odbiór produkcyjny
+
+- Publiczne odczyty po wdrożeniu poprawki: /umow-spotkanie HTTP 200; 12.10.2026 HTTP 200 z godzinami co 30 minut, Europe/Warsaw; niedziela HTTP 200 z pustą listą.
+- Szymon potwierdził potwierdzenie rezerwacji na stronie oraz wydarzenie w Google Calendar. Po pierwszym teście godzina 12:30 dnia 12.10.2026 przestała być dostępna w publicznym API.
+- Pierwszy SMS nie dotarł, a właściciel potwierdził puste saldo Zadarma. Nie odczytano odpowiedzi API dostawcy, więc nie ustalono technicznego kodu odmowy.
+- Po doładowaniu konta i ponownym teście Szymon potwierdził odbiór SMS oraz poprawne działanie całości. Dowód doręczenia jest potwierdzeniem właściciela, nie jedynie przyjęciem żądania przez API.
+- Nie włączano automatycznych ponowień SMS ani nie tworzono zastępczych spotkań przez backend. Testowe wydarzenia usuwa właściciel w kalendarzu.
+- Publikację wykonał Szymon ręcznym buildem w panelu Cloudflare, po wysłaniu zatwierdzonych zmian do GitHub master. Lokalny Wrangler nie był używany do publikacji.

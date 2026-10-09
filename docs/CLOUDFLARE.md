@@ -1,6 +1,6 @@
 # Wdrożenie IndDev na Cloudflare Workers
 
-Aktualny wariant: domena w Hostido; statyczna strona Astro oraz endpoint /api/contact na Cloudflare. Dodano lokalnie podstronę /umow-spotkanie i endpointy rezerwacji /api/booking; wymagają sekretów Google Calendar i Zadarma oraz SQLite Durable Object. Konfiguracja i odbiór: [REZERWACJE.md](REZERWACJE.md). Brak PHP i SMTP. Poprzedni backend server/ i instrukcja HOSTIDO.md są archiwalnym wariantem — nie są publikowane.
+Aktualny wariant: domena w Hostido; statyczna strona Astro oraz endpoint /api/contact na Cloudflare. Podstrona /umow-spotkanie i endpointy rezerwacji /api/booking zostały wdrożone, korzystają z Google Calendar, Zadarma i SQLite Durable Object. Odczyt dostępności potwierdzono na produkcji; 9.10.2026 Szymon potwierdził zapis wydarzenia i odbiór SMS po doładowaniu Zadarma. Konfiguracja i odbiór: [REZERWACJE.md](REZERWACJE.md). Brak PHP i SMTP. Poprzedni backend server/ i instrukcja HOSTIDO.md są archiwalnym wariantem — nie są publikowane.
 
 ## Co już ustawiono ręcznie
 

@@ -1,6 +1,6 @@
 # Rezerwacje IndDev — konfiguracja i odbiór
 
-Status: kod przygotowany lokalnie. Ten dokument nie potwierdza publikacji, autoryzacji Google ani doręczenia SMS.
+Status na 9.10.2026: wdrożone. Odczyt dostępności potwierdzono na produkcji; Szymon potwierdził zapis wydarzenia i doręczenie SMS po doładowaniu Zadarma. Szczegóły dowodów i zakres kontroli: [REZERWACJE-QA.md](REZERWACJE-QA.md). Recepcjonistka ElevenLabs nie jest jeszcze podłączona do tego backendu.
 
 ## Uzgodniony zakres
 
