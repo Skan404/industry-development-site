@@ -51,7 +51,7 @@ export const packages: readonly Package[] = [
       "Założenie lub uporządkowanie Profilu Firmy w Google",
       "Nowe realizacje w ramach czasu zmian",
     ],
-    changes: "15 minut drobnych zmian miesięcznie",
+    changes: "30 minut zmian miesięcznie",
     response: "Pierwsza odpowiedź: do 3 dni roboczych",
   },
   {
@@ -72,7 +72,7 @@ export const packages: readonly Package[] = [
       "Formularze interaktywne: rezerwacje i powiadomienia SMS",
       "Nowe realizacje w ramach czasu zmian",
     ],
-    changes: "30 minut drobnych zmian miesięcznie",
+    changes: "45 minut zmian miesięcznie",
     response: "Pierwsza odpowiedź: do 2 dni roboczych",
   },
   {
@@ -93,7 +93,7 @@ export const packages: readonly Package[] = [
       "1 scenariusz automatycznego porządkowania zapytań",
       "1 nowa realizacja miesięcznie poza limitem zmian",
     ],
-    changes: "60 minut drobnych zmian miesięcznie",
+    changes: "75 minut zmian miesięcznie",
     response: "Pierwsza odpowiedź: do 1 dnia roboczego",
   },
 ] as const;
@@ -156,8 +156,8 @@ export const packageComparison: readonly {
     ],
   },
   {
-    label: "Drobne zmiany na stronie",
-    values: ["15 min/mies.", "30 min/mies.", "60 min/mies."],
+    label: "Zmiany na stronie",
+    values: ["30 min/mies.", "45 min/mies.", "75 min/mies."],
   },
   {
     label: "Pierwsza odpowiedź na zgłoszenie",
@@ -207,7 +207,7 @@ export const faqs = [
   {
     question: "Ile poprawek mogę zgłosić?",
     answer:
-      "Na etapie projektu uzgadniamy kierunek i zakres rund poprawek w briefie. Po publikacji każdy pakiet zawiera miesięczny limit drobnych zmian: 15, 30 lub 60 minut.",
+      "Na etapie projektu uzgadniamy kierunek i zakres rund poprawek w briefie. Po publikacji każdy pakiet zawiera miesięczny limit zmian: 30, 45 lub 75 minut.",
   },
   {
     question: "Jak długo trwa przygotowanie strony?",
